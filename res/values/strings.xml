@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TutorialAnimation</string>
+    <string name="hello_world">Hello world!</string>
+    <string-array name="operation">
+        <item >Basic operation</item>
+        <item >Delete</item>
+        <item >Erase all</item>
+        <item >Return</item>
+        <item >Tab</item>
+        <item >Delete</item>
+        <item >Insert space</item>
+        <item >Erase all</item>
+        <item >Return</item>
+        <item >Tab</item>
+        <item >Select text</item>
+        <item >Insert text</item>
+    </string-array>
+    <string-array name="gesture">
+        <item >Ink Gesture</item>
+        <item >Delete</item>
+        <item >Erase all</item>
+        <item >Return</item>
+        <item >Tab</item>
+        <item >Delete</item>
+        <item >Insert space</item>
+        <item >Erase all</item>
+        <item >Return</item>
+        <item >Tab</item>
+        <item >Select text</item>
+        <item >Insert text</item>
+    </string-array>
+
+</resources>

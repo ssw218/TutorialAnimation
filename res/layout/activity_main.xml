@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" > 
+    
+    <fragment
+        android:name="com.example.tutorialanimation.IndexFragment"
+        android:id="@+id/index_fragment"
+        android:layout_width="wrap_content"
+    	android:layout_height="match_parent"
+    	android:layout_alignParentLeft="true" />
+    
+    <fragment
+        android:name="com.example.tutorialanimation.ContentFragment"
+        android:id="@+id/content_fragment"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:layout_toRightOf="@id/index_fragment"
+    	android:layout_alignParentRight="true" />
+  
+</RelativeLayout>

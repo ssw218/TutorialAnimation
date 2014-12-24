@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFD0F8CE" >
+
+    <TextView
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Tutorial"
+        android:textSize="30sp"
+        android:background="#22b14c" />
+    
+    <ScrollView
+        android:id="@+id/scroll_view"
+    	android:scrollbars="vertical"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content">"
+        
+        <LinearLayout
+            android:id="@+id/index_view"
+        	android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical" >"
+            
+        </LinearLayout>
+        
+    </ScrollView>
+    
+</LinearLayout>

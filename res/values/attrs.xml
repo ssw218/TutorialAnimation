@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InkGestureAnimation">
+        <attr name="animation" format="integer">
+            <enum name="ink_delete" 			value="1" />
+            <enum name="ink_erase_all"			value="2" />
+			<enum name="ink_return" 			value="3" />
+			<enum name="ink_tab" 				value="4" />
+			<enum name="typeset_delete" 		value="5" />
+			<enum name="typeset_insert_space" 	value="6" />
+			<enum name="typeset_erase_all" 		value="7" />
+			<enum name="typeset_return" 		value="8" />
+			<enum name="typeset_tab" 			value="9" />
+			<enum name="typeset_select_text" 	value="10" />
+			<enum name="typeset_insert_text" 	value="11" />
+        </attr>
+    </declare-styleable>
+</resources>

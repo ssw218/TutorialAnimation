@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tutorial="http://schemas.android.com/apk/res/com.example.tutorialanimation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+    <TextView 
+   	    	android:id="@+id/textView"
+   	    	android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:paddingTop="20dp"
+    		android:paddingLeft="10dp"
+    		android:text="Tutorial"
+    		android:textColor="#000000"
+    		android:textSize="40sp" />
+        <TextView 
+   	    	android:id="@+id/index_text_View"
+   	    	android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="50dp"
+    		android:text="Basic operation"
+    		android:textColor="#000000"
+    		android:textSize="30sp" />
+        <TextView 
+   	    	android:id="@+id/index_text_View1"
+   	    	android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="80dp"
+    		android:text="Delete"
+    		android:textColor="#000000"
+    		android:textSize="25sp" />
+         <TextView 
+   	    	android:id="@+id/index_text_View2"
+   	    	android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:singleLine="false"
+    		android:paddingLeft="100dp"
+    		android:paddingRight="50dp"
+    		android:text="Deletion is the act of deleting or removal by striking out material, such as a word or passage, that has been removed from a body of written or printed matter."
+    		android:textColor="#000000"
+    		android:textSize="20sp" />
+         <com.example.tutorialanimation.InkGestureAnimation
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_marginTop="100dp"
+    		tutorial:animation="ink_delete"
+    		android:layout_gravity="center" />
+
+</LinearLayout>
