@@ -31,5 +31,21 @@
         <item >Select text</item>
         <item >Insert text</item>
     </string-array>
+    
+    <string-array name="content">
+        <item >Ink Gesture</item>
+        <item >Deletion is the act of deleting or removal by striking out material, such as a
+             word or passage, that has been removed from a body of written or printed matter.</item>
+        <item >Erase all</item>
+        <item >Return</item>
+        <item >Tab</item>
+        <item >Delete</item>
+        <item >Insert space</item>
+        <item >Erase all</item>
+        <item >Return</item>
+        <item >Tab</item>
+        <item >Select text</item>
+        <item >Insert text</item>
+    </string-array>
 
 </resources>

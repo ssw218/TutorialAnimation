@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ContentFragment extends Fragment {
 	private static final String TAG = "ContentFragment";
 	private static final boolean DEBUG = true;
 	
-	private LinearLayout mContentLayout;
+	private ContentLayout mContentLayout;
 	private LayoutParams mLayoutParams;
 	
 	public ContentFragment() {
@@ -30,13 +31,18 @@ public class ContentFragment extends Fragment {
 			Bundle savedInstanceState) {
 		if(DEBUG) Log.v(TAG, "onCreateView()");
 		super.onCreateView(inflater, container, savedInstanceState);
-		mContentLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.content, null);
+		//mContentLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.content, null);
 		//return mContentLayout;
-		return new ContentLayout(getActivity());
+		mContentLayout = new ContentLayout(getActivity());
+		return mContentLayout;
+	}
+	
+	public void onDirectoryClick(TextView view) {
+		mContentLayout.onDirectoryClick(view);
 	}
 	
 	public void updateSize() {
-		mContentLayout.setLeft(500);
+		//mContentLayout.setLeft(500);
 	}
 	
 }

@@ -3,7 +3,10 @@ package com.example.tutorialanimation;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,11 +69,16 @@ public class ContentLayout extends LinearLayout {
 		mContent = new Content(mContext);
 		mAnimation = new InkGestureAnimation(mContext, mCurrentIndex);
 		
-		addView(mFirstDirectory);
-		addView(mSecondDirectory);
-		addView(mThirdDirectory);
-		addView(mContent);
-		addView(mAnimation);
+		LayoutParams l = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		addView(mFirstDirectory, l);
+		addView(mSecondDirectory, l);
+		addView(mThirdDirectory, l);
+		addView(mContent, l);
+		
+		LayoutParams p = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		p.gravity = Gravity.CENTER;
+		p.topMargin = 100;
+		addView(mAnimation, p);
 
 		mThirdDirectoryExtra = new ThirdDirectory(mContext);
 		mContentExtra = new Content(mContext);
@@ -78,8 +86,8 @@ public class ContentLayout extends LinearLayout {
 		if (mModel == MODEL_ONE_SCREEN) {
 			
 		} else if (mModel == MODEL_TWO_SCREEN) {
-			addView(mThirdDirectoryExtra);
-			addView(mContentExtra);
+			addView(mThirdDirectoryExtra, l);
+			addView(mContentExtra, l);
 		}
 	}
 	
@@ -106,22 +114,66 @@ public class ContentLayout extends LinearLayout {
 		// update size: text and animation
 	}
 	
+	long actionDownTime;
+	long actionUpTime;
+	float actionDownY;
+	float actionUpY;
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if(DEBUG) Log.e(TAG, event.toString());
+		boolean handled = super.onTouchEvent(event);
+		//if(DEBUG) Log.e(TAG, event.toString());
+		// scroll up and scroll down
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
-			
+			actionDownY = event.getY();
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
-			
+			actionUpY = event.getY();
+			if (actionUpY - actionDownY > 50) {
+				if(DEBUG) Log.e(TAG, "gesture down");
+				doScrollDown();
+			} else if (actionDownY - actionUpY > 50) {
+				if(DEBUG) Log.e(TAG, "gesture up");
+				doScrollUp();
+			}
 		}
-		return super.onTouchEvent(event);
+		return true;
+	}
+	
+	private void doScrollDown() {
+		
+	}
+	
+	private void doScrollUp() {
+		
+	}
+	
+	// called by ContentFragment
+	public void onDirectoryClick(TextView view) {
+		if(false) // if neccessary
+			mSecondDirectory.setText("");
+		mThirdDirectory.setText(view.getText());
+		mContent.setText(getContentByText(view.getText().toString()));
+		
+		// if necessary, change extra text
+		if(mModel == MODEL_TWO_SCREEN) {
+			mThirdDirectoryExtra.setText("");
+			mContentExtra.setText(getContentByText(""));
+		}
+	}
+	
+	private String getContentByText(String text) {
+		
+		return mContext.getResources().getStringArray(R.array.content)[1];
 	}
 	
 	private class FirstDirectory extends TextView {
 
 		public FirstDirectory(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
+			setPadding(10, 20, 0, 0);
+			setText("Tutorial");
+			setTextColor(Color.BLACK);
+			setTextSize(40);
 		}
 		
 	}
@@ -130,7 +182,10 @@ public class ContentLayout extends LinearLayout {
 
 		public SecondDirectory(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
+			setPadding(50, 0, 0, 0);
+			setText("Basic operation");
+			setTextColor(Color.BLACK);
+			setTextSize(30);
 		}
 		
 	}
@@ -139,7 +194,10 @@ public class ContentLayout extends LinearLayout {
 
 		public ThirdDirectory(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
+			setPadding(80, 0, 0, 0);
+			setText("Delete");
+			setTextColor(Color.BLACK);
+			setTextSize(25);
 		}
 		
 	}
@@ -148,7 +206,13 @@ public class ContentLayout extends LinearLayout {
 
 		public Content(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
+			setPadding(100, 0, 50, 0);
+			setText("Deletion is the act of deleting or removal " +
+					"by striking out material, such as a word or passage, " +
+					"that has been removed from a body of written or printed matter.");
+			setTextColor(Color.BLACK);
+			setTextSize(20);
+			setSingleLine(false);
 		}
 		
 	}
