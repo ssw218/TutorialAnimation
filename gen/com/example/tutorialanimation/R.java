@@ -1693,7 +1693,6 @@ containing a value of this type.
         public static final int dialog=0x7f090019;
         public static final int disableHome=0x7f09000d;
         public static final int dropdown=0x7f09001a;
-        public static final int editText1=0x7f090051;
         public static final int edit_query=0x7f09003e;
         public static final int end=0x7f09001c;
         public static final int expand_activities_button=0x7f09002d;
@@ -1704,10 +1703,6 @@ containing a value of this type.
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f09002e;
         public static final int index_fragment=0x7f09004b;
-        public static final int index_text_View=0x7f09004e;
-        public static final int index_text_View1=0x7f09004f;
-        public static final int index_text_View2=0x7f090050;
-        public static final int index_view=0x7f090053;
         public static final int ink_delete=0x7f09001e;
         public static final int ink_erase_all=0x7f09001f;
         public static final int ink_return=0x7f090020;
@@ -1722,7 +1717,6 @@ containing a value of this type.
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
         public static final int radio=0x7f090036;
-        public static final int scroll_view=0x7f090052;
         public static final int search_badge=0x7f090040;
         public static final int search_bar=0x7f09003f;
         public static final int search_button=0x7f090041;
@@ -1740,7 +1734,6 @@ containing a value of this type.
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f090047;
         public static final int tabMode=0x7f09000c;
-        public static final int textView=0x7f09004d;
         public static final int title=0x7f090032;
         public static final int typeset_delete=0x7f090022;
         public static final int typeset_erase_all=0x7f090023;
@@ -1804,9 +1797,7 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030015;
         public static final int abc_simple_dropdown_hint=0x7f030016;
         public static final int activity_main=0x7f030017;
-        public static final int content=0x7f030018;
-        public static final int index=0x7f030019;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
+        public static final int support_simple_spinner_dropdown_item=0x7f030018;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
