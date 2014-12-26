@@ -75,7 +75,7 @@ public class TutorialActivity extends Activity {
     
     public void onConfigurationChanged(Configuration newConfig) {
     	super.onConfigurationChanged(newConfig);
-    	SizeManager layoutManager = SizeManager.getInstance(this);
+    	TutorialManager layoutManager = TutorialManager.getInstance(this);
 //    	layoutManager.updateScreenOrientation();
     	if (DEBUG) Log.v(TAG, "(" + mIndexFragment.getView().getLeft() + ", " + mIndexFragment.getView().getTop() + 
     			") (" + mIndexFragment.getView().getRight() + ", " + mIndexFragment.getView().getBottom() + ")");
@@ -94,7 +94,7 @@ public class TutorialActivity extends Activity {
 //    	} else {
 //    		textView.setText("Not Portrait");
 //    	}
-        SizeManager sizeManager = SizeManager.getInstance(this);
+        TutorialManager sizeManager = TutorialManager.getInstance(this);
 //        textView.setTextSize(sizeManager.getTextSize());
     }
     

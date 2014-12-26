@@ -29,6 +29,7 @@ public class ContentLayout extends LinearLayout {
 	
 	private Context mContext;
 	private Resources mResources;
+	private TutorialManager mTutorialManager;
 	
 	private int mModel;
 	private int mCurrentIndex;
@@ -40,6 +41,7 @@ public class ContentLayout extends LinearLayout {
 	// maybe a operation animation else
 	private InkGestureAnimation mAnimation;
 	// if two screen model
+	private TextView mSecondDirectoryExtra;
 	private TextView mThirdDirectoryExtra;
 	private TextView mContentExtra;
 	
@@ -47,6 +49,7 @@ public class ContentLayout extends LinearLayout {
 		super(context);
 		mContext = context;
 		mResources = getResources();
+		mTutorialManager = TutorialManager.getInstance(mContext);
 		init();
 	}
 	
@@ -142,30 +145,66 @@ public class ContentLayout extends LinearLayout {
 	}
 	
 	private void doScrollDown() {
-		
+		if (mTutorialManager.isFirstSecondDirectory(mSecondDirectory.getText().toString()) && 
+				mTutorialManager.isFirstThirdDirectory(mThirdDirectory.getText().toString()))
+			return ;
+		// up 
+		if (mTutorialManager.isLastSecondDirectory(mSecondDirectory.getText().toString()) && 
+				mTutorialManager.isFirstThirdDirectory(mThirdDirectory.getText().toString())) {
+			mSecondDirectory.setText(mTutorialManager.getFirstSecondDirectory());
+			mThirdDirectory.setText(mTutorialManager.getLastSecondDirectory(mSecondDirectory.getText().toString()));
+			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
+			if (mModel == MODEL_TWO_SCREEN) {
+				mThirdDirectoryExtra.setText("");
+				mContentExtra.setText("");
+			}
+			return ;
+		}
+		// normal 
+		if (mModel == MODEL_TWO_SCREEN) {
+			mThirdDirectoryExtra.setText(mThirdDirectory.getText().toString());
+			mContentExtra.setText(mContent.getText().toString());
+		}
+		mThirdDirectory.setText(mTutorialManager.getPreviousThirdDirectory(mThirdDirectory.getText().toString()));
+		mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
+		// for animation
 	}
 	
 	private void doScrollUp() {
+		if (mTutorialManager.isLastSecondDirectory(mSecondDirectory.getText().toString()) && 
+				mTutorialManager.isLastThirdDirectory(mThirdDirectory.getText().toString())) 
+			return ;
 		
+		if (mModel == MODEL_TWO_SCREEN) {
+			
+		}
 	}
 	
 	// called by ContentFragment
 	public void onDirectoryClick(TextView view) {
-		if(false) // if neccessary
-			mSecondDirectory.setText("");
+		if (view.getText().equals(mThirdDirectory.getText())) return;
+		
+		String secondDirectory = mTutorialManager.findScecondDirectory(view.getText().toString());
+		if (!mSecondDirectory.getText().equals(secondDirectory)) // if neccessary
+			mSecondDirectory.setText(secondDirectory);
 		mThirdDirectory.setText(view.getText());
-		mContent.setText(getContentByText(view.getText().toString()));
+		mContent.setText(mTutorialManager.getContentByThirdDirectory(view.getText().toString()));
 		
 		// if necessary, change extra text
-		if(mModel == MODEL_TWO_SCREEN) {
-			mThirdDirectoryExtra.setText("");
-			mContentExtra.setText(getContentByText(""));
+		if (mModel == MODEL_TWO_SCREEN) {
+			if (mTutorialManager.isLastSecondDirectory(view.getText().toString()) && 
+					mTutorialManager.isLastThirdDirectory(view.getText().toString())) {
+				mThirdDirectoryExtra.setText("");
+				mContentExtra.setText("");
+			} else if (mTutorialManager.isFirstSecondDirectory(view.getText().toString()) &&
+					mTutorialManager.isLastThirdDirectory(view.getText().toString())) {
+				mThirdDirectoryExtra.setText("");
+				mContentExtra.setText("");
+			} else {
+				mThirdDirectoryExtra.setText(mTutorialManager.getNextThirdDirectory(view.getText().toString()));
+				mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
+			}
 		}
-	}
-	
-	private String getContentByText(String text) {
-		
-		return mResources.getStringArray(R.array.content)[1];
 	}
 	
 	private class FirstDirectory extends TextView {
