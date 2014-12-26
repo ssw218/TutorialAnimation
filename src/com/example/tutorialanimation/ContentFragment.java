@@ -15,7 +15,6 @@ public class ContentFragment extends Fragment {
 	private static final boolean DEBUG = true;
 	
 	private ContentLayout mContentLayout;
-	private LayoutParams mLayoutParams;
 	
 	public ContentFragment() {
 		super();

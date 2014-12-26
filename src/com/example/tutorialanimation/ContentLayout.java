@@ -2,6 +2,7 @@ package com.example.tutorialanimation;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -27,6 +28,7 @@ public class ContentLayout extends LinearLayout {
 	private static final int MODEL_TWO_SCREEN = 2;
 	
 	private Context mContext;
+	private Resources mResources;
 	
 	private int mModel;
 	private int mCurrentIndex;
@@ -44,6 +46,7 @@ public class ContentLayout extends LinearLayout {
 	public ContentLayout(Context context) {
 		super(context);
 		mContext = context;
+		mResources = getResources();
 		init();
 	}
 	
@@ -57,7 +60,7 @@ public class ContentLayout extends LinearLayout {
 		if (layoutParams == null) {
 			layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		}	
-		setBackgroundColor(Color.WHITE);
+		setBackgroundResource(R.color.content_layout_background);
 		setOrientation(VERTICAL);
 		mModel = judgeModel();
 	}
@@ -77,7 +80,7 @@ public class ContentLayout extends LinearLayout {
 		
 		LayoutParams p = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		p.gravity = Gravity.CENTER;
-		p.topMargin = 100;
+		p.topMargin = mResources.getInteger(R.integer.animation_top_margin);
 		addView(mAnimation, p);
 
 		mThirdDirectoryExtra = new ThirdDirectory(mContext);
@@ -114,8 +117,7 @@ public class ContentLayout extends LinearLayout {
 		// update size: text and animation
 	}
 	
-	long actionDownTime;
-	long actionUpTime;
+	static final int SCROLL_DISTANCE = 50;
 	float actionDownY;
 	float actionUpY;
 	
@@ -128,10 +130,10 @@ public class ContentLayout extends LinearLayout {
 			actionDownY = event.getY();
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
 			actionUpY = event.getY();
-			if (actionUpY - actionDownY > 50) {
+			if (actionUpY - actionDownY > SCROLL_DISTANCE) {
 				if(DEBUG) Log.e(TAG, "gesture down");
 				doScrollDown();
-			} else if (actionDownY - actionUpY > 50) {
+			} else if (actionDownY - actionUpY > SCROLL_DISTANCE) {
 				if(DEBUG) Log.e(TAG, "gesture up");
 				doScrollUp();
 			}
@@ -163,55 +165,77 @@ public class ContentLayout extends LinearLayout {
 	
 	private String getContentByText(String text) {
 		
-		return mContext.getResources().getStringArray(R.array.content)[1];
+		return mResources.getStringArray(R.array.content)[1];
 	}
 	
 	private class FirstDirectory extends TextView {
-
+		// default size
+		private static final int PADDING_LEFT_DEFAULT = 20;
+		private static final int PADDING_TOP_DEFAULT = 0;
+		private static final int PADDING_RIGHT_DEFAULT = 0;
+		private static final int PADDING_BOTTOM_DEFAULT = 0;
+		private static final int TEXT_SIZE_DEFAULT = 40;
+		
 		public FirstDirectory(Context context) {
 			super(context);
-			setPadding(10, 20, 0, 0);
-			setText("Tutorial");
-			setTextColor(Color.BLACK);
-			setTextSize(40);
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
+			setText(mResources.getString(R.string.first_directory_text_default));
+			setTextColor(mResources.getColor(R.color.first_directory_text));
+			setTextSize(TEXT_SIZE_DEFAULT);
 		}
 		
 	}
 	
 	private class SecondDirectory extends TextView {
-
+		// default size
+		private static final int PADDING_LEFT_DEFAULT = 50;
+		private static final int PADDING_TOP_DEFAULT = 0;
+		private static final int PADDING_RIGHT_DEFAULT = 0;
+		private static final int PADDING_BOTTOM_DEFAULT = 0;
+		private static final int TEXT_SIZE_DEFAULT = 30;
+		
 		public SecondDirectory(Context context) {
 			super(context);
-			setPadding(50, 0, 0, 0);
-			setText("Basic operation");
-			setTextColor(Color.BLACK);
-			setTextSize(30);
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
+			setText(mResources.getString(R.string.second_directory_text_default));
+			setTextColor(mResources.getColor(R.color.second_directory_text));
+			setTextSize(TEXT_SIZE_DEFAULT);
 		}
 		
 	}
 	
 	private class ThirdDirectory extends TextView {
-
+		// default size
+		private static final int PADDING_LEFT_DEFAULT = 80;
+		private static final int PADDING_TOP_DEFAULT = 0;
+		private static final int PADDING_RIGHT_DEFAULT = 0;
+		private static final int PADDING_BOTTOM_DEFAULT = 0;
+		private static final int TEXT_SIZE_DEFAULT = 25;
+		
 		public ThirdDirectory(Context context) {
 			super(context);
-			setPadding(80, 0, 0, 0);
-			setText("Delete");
-			setTextColor(Color.BLACK);
-			setTextSize(25);
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
+			setText(mResources.getString(R.string.third_directory_text_default));
+			setTextColor(mResources.getColor(R.color.third_directory_text));
+			setTextSize(TEXT_SIZE_DEFAULT);
 		}
 		
 	}
 	
 	private class Content extends TextView {
-
+		// default size
+		private static final int PADDING_LEFT_DEFAULT = 100;
+		private static final int PADDING_TOP_DEFAULT = 0;
+		private static final int PADDING_RIGHT_DEFAULT = 50;
+		private static final int PADDING_BOTTOM_DEFAULT = 0;
+		private static final int TEXT_SIZE_DEFAULT = 20;
+		
 		public Content(Context context) {
 			super(context);
-			setPadding(100, 0, 50, 0);
-			setText("Deletion is the act of deleting or removal " +
-					"by striking out material, such as a word or passage, " +
-					"that has been removed from a body of written or printed matter.");
-			setTextColor(Color.BLACK);
-			setTextSize(20);
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
+			setText(mResources.getString(R.string.content_text_default));
+			setTextColor(mResources.getColor(R.color.content_text));
+			setTextSize(TEXT_SIZE_DEFAULT);
 			setSingleLine(false);
 		}
 		
