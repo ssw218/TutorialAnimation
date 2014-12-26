@@ -3,6 +3,7 @@ package com.example.tutorialanimation;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -127,6 +128,8 @@ public class IndexLayout extends LinearLayout {
 		public ListLayout(Context context, int id) {
 			super(context);
 			setOrientation(VERTICAL);
+			LayoutTransition layoutTransition = new LayoutTransition();
+			this.setLayoutTransition(layoutTransition);
 			String[] textArray = getResources().getStringArray(id);
 			mTitleView = new DirectoryView(context, textArray[0]);	
 			mTextViewList = new ArrayList<TextView>();

@@ -112,11 +112,23 @@ public class TutorialManager {
 		return mOperation[0];
 	}
 	
-	public String getLastSecondDirectory(String secondDirectory) {
+	public String getLastThirdDirectory(String secondDirectory) {
 		if (secondDirectory.equals(mOperation[0])) 
 			return mOperation[mOperation.length - 1];
 		else if (secondDirectory.equals(mGesture[0]))
 			return mGesture[mGesture.length - 1];
+		return null;
+	}
+	
+	public String getLastSecondDirectory() {
+		return mGesture[0];
+	}
+	
+	public String getFirstThirdDirectory(String secondDirectory) {
+		if (secondDirectory.equals(mOperation[0])) 
+			return mOperation[1];
+		else if (secondDirectory.equals(mGesture[0]))
+			return mGesture[1];
 		return null;
 	}
 	

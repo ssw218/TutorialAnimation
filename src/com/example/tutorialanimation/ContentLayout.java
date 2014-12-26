@@ -1,5 +1,6 @@
 package com.example.tutorialanimation;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -65,6 +66,8 @@ public class ContentLayout extends LinearLayout {
 		}	
 		setBackgroundResource(R.color.content_layout_background);
 		setOrientation(VERTICAL);
+		LayoutTransition layoutTransition = new LayoutTransition();
+		this.setLayoutTransition(layoutTransition);
 		mModel = judgeModel();
 	}
 	
@@ -152,7 +155,7 @@ public class ContentLayout extends LinearLayout {
 		if (mTutorialManager.isLastSecondDirectory(mSecondDirectory.getText().toString()) && 
 				mTutorialManager.isFirstThirdDirectory(mThirdDirectory.getText().toString())) {
 			mSecondDirectory.setText(mTutorialManager.getFirstSecondDirectory());
-			mThirdDirectory.setText(mTutorialManager.getLastSecondDirectory(mSecondDirectory.getText().toString()));
+			mThirdDirectory.setText(mTutorialManager.getLastThirdDirectory(mSecondDirectory.getText().toString()));
 			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
 			if (mModel == MODEL_TWO_SCREEN) {
 				mThirdDirectoryExtra.setText("");
@@ -174,10 +177,29 @@ public class ContentLayout extends LinearLayout {
 		if (mTutorialManager.isLastSecondDirectory(mSecondDirectory.getText().toString()) && 
 				mTutorialManager.isLastThirdDirectory(mThirdDirectory.getText().toString())) 
 			return ;
-		
-		if (mModel == MODEL_TWO_SCREEN) {
-			
+		// down 
+		if (mTutorialManager.isFirstSecondDirectory(mSecondDirectory.getText().toString()) && 
+				mTutorialManager.isLastThirdDirectory(mThirdDirectory.getText().toString())) {
+			mSecondDirectory.setText(mTutorialManager.getLastSecondDirectory());
+			mThirdDirectory.setText(mTutorialManager.getFirstThirdDirectory(mSecondDirectory.getText().toString()));
+			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
+			if (mModel == MODEL_TWO_SCREEN) {
+				mThirdDirectoryExtra.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
+				mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
+			}
+			return ;
 		}
+		// normal
+		if (mModel == MODEL_TWO_SCREEN) {
+			mThirdDirectory.setText(mThirdDirectoryExtra.getText().toString());
+			mContent.setText(mContentExtra.getText().toString());
+			mThirdDirectoryExtra.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
+			mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
+		} else {
+			mThirdDirectory.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
+			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
+		}
+		// for animation
 	}
 	
 	// called by ContentFragment
