@@ -5,4 +5,5 @@
     <color name="second_directory_text">#FF000000</color>
     <color name="third_directory_text">#FF000000</color>
     <color name="content_text">#FF000000</color>
+    <color name="directory_text">#FF22B14C</color>
 </resources>

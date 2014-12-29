@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class IndexLayout extends LinearLayout {
 	private static final String TAG = "IndexLayout";
 	private static final boolean DEBUG = true;
 	private Context mContext;
+	private Resources mResources;
 	
 	private ScrollView mIndexScrollView;
 	private TextView mDirectory;
@@ -28,6 +30,11 @@ public class IndexLayout extends LinearLayout {
 	public IndexLayout(Context context) {
 		super(context);
 		mContext = context;
+		mResources = mContext.getResources();
+		init();
+	}
+	
+	private void init() {
 		setOrientation(VERTICAL);
 		setBackgroundColor(0xFFD0F8CE);
 		LayoutParams l = (LayoutParams) getLayoutParams();
@@ -44,13 +51,19 @@ public class IndexLayout extends LinearLayout {
 	}
 	
 	private class Directory extends TextView {
-
+		// default size
+		private static final int PADDING_LEFT_DEFAULT = 10;
+		private static final int PADDING_TOP_DEFAULT = 10;
+		private static final int PADDING_RIGHT_DEFAULT = 10;
+		private static final int PADDING_BOTTOM_DEFAULT = 10;
+		private static final int TEXT_SIZE_DEFAULT = 30;
+		
 		public Directory(Context context) {
 			super(context);
-			setText("Tutorial");
-			setTextSize(30);
-			setBackgroundColor(0xFF22B14C);
-			setPadding(10, 10, 10, 10);
+			setText(mResources.getString(R.string.directory_text));
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
+			setTextSize(TEXT_SIZE_DEFAULT);
+			setBackgroundColor(mResources.getColor(R.color.directory_text));
 		}
 		
 	}
