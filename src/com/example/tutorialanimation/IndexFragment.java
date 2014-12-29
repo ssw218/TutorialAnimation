@@ -13,10 +13,7 @@ public class IndexFragment extends Fragment {
 	private static final String TAG = "IndexFragment";
 	private static final boolean DEBUG = true;
 	
-	private ListLayout mOperationLayout;
-	private ListLayout mGestureLayout;
-	private LinearLayout mIndexLayout;
-	private LinearLayout mIndexView;
+	private IndexLayout mIndexLayout;
 	
 	public IndexFragment() {
 		super();
@@ -30,19 +27,13 @@ public class IndexFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mOperationLayout = new ListLayout(getActivity(), R.array.operation);
-		mGestureLayout = new ListLayout(getActivity(), R.array.gesture);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		mIndexLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.index, null);
-		mIndexView =  (LinearLayout) mIndexLayout.findViewById(R.id.index_view);
-		mIndexView.addView(mOperationLayout, p);
-		mIndexView.addView(mGestureLayout, p);
+		mIndexLayout = new IndexLayout(getActivity());
 		return mIndexLayout;
 	}
 	

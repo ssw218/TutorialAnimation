@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">TutorialAnimation</string>
     <string name="hello_world">Hello world!</string>
-    <string-array name="operation">
-        <item >Basic operation</item>
-        <item >Delete</item>
-        <item >Erase all</item>
-        <item >Return</item>
-        <item >Tab</item>
-        <item >Delete</item>
+    <string-array name="gesture">
+        <item >Ink Gesture</item>
+        <item >Ink Delete</item>
+        <item >Ink Erase all</item>
+        <item >Ink Return</item>
+        <item >Ink Tab</item>
+        <item >Type Delete</item>
         <item >Insert space</item>
-        <item >Erase all</item>
-        <item >Return</item>
-        <item >Tab</item>
+        <item >Type Erase all</item>
+        <item >Type Return</item>
+        <item >Type Tab</item>
         <item >Select text</item>
         <item >Insert text</item>
     </string-array>
-    <string-array name="gesture">
-        <item >Ink Gesture</item>
-        <item >Delete</item>
-        <item >Erase all</item>
-        <item >Return</item>
-        <item >Tab</item>
-        <item >Delete</item>
-        <item >Insert space</item>
-        <item >Erase all</item>
-        <item >Return</item>
-        <item >Tab</item>
-        <item >Select text</item>
-        <item >Insert text</item>
+    <string-array name="operation">
+        <item >Basic operation</item>
+        <item >First</item>
+        <item >Second</item>
+        <item >Third</item>
+        <item >Fourth</item>
+        <item >Fiveth</item>
+        <item >Sixth</item>
     </string-array>
     
     <string-array name="content">
         <item >Ink Gesture</item>
         <item >Deletion is the act of deleting or removal by striking out material, such as a
              word or passage, that has been removed from a body of written or printed matter.</item>
-        <item >Erase all</item>
-        <item >Return</item>
-        <item >Tab</item>
+        <item >Ink Erase all</item>
+        <item >Ink Return</item>
+        <item >Ink Tab</item>
         <item >Delete</item>
         <item >Insert space</item>
-        <item >Erase all</item>
-        <item >Return</item>
-        <item >Tab</item>
+        <item >Type Erase all</item>
+        <item >Type Return</item>
+        <item >Type Tab</item>
         <item >Select text</item>
         <item >Insert text</item>
     </string-array>
-
+    <string name="first_directory_text_default">Tutorial</string>
+    <string name="second_directory_text_default">Ink Gesture</string>
+    <string name="third_directory_text_default">Ink Delete</string>
+    <string name="content_text_default">Deletion is the act of deleting or removal by striking out material, 
+        such as a word or passage, that has been removed from a body of written or printed matter.</string>
 </resources>

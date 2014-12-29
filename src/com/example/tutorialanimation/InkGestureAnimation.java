@@ -118,7 +118,7 @@ public class InkGestureAnimation extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		Paint paint = new Paint();
-		Bitmap bitmap = mGesture = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_handwriting_normal);
+		Bitmap bitmap = mGesture = BitmapFactory.decodeResource(getResources(), R.drawable.normal);
 		Matrix matrix = new Matrix();
 		canvas.drawBitmap(bitmap, matrix, paint);
 		switch (mAnimationId) {
@@ -175,7 +175,7 @@ public class InkGestureAnimation extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_handwriting_normal);
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.normal);
 		setMeasuredDimension(bitmap.getWidth(), bitmap.getHeight());
 	}
 
