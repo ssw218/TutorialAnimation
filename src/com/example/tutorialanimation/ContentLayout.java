@@ -42,7 +42,6 @@ public class ContentLayout extends LinearLayout {
 	// maybe a operation animation else
 	private InkGestureAnimation mAnimation;
 	// if two screen model
-	private TextView mSecondDirectoryExtra;
 	private TextView mThirdDirectoryExtra;
 	private TextView mContentExtra;
 	
