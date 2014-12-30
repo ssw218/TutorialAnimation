@@ -125,6 +125,8 @@ public class ContentLayout extends LinearLayout {
 	static final int SCROLL_DISTANCE = 50;
 	float actionDownY;
 	float actionUpY;
+	float actionDownX;
+	float actionUpX;
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -133,17 +135,33 @@ public class ContentLayout extends LinearLayout {
 		// scroll up and scroll down
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
 			actionDownY = event.getY();
+			actionDownX = event.getX();
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
 			actionUpY = event.getY();
+			actionUpX = event.getX();
 			if (actionUpY - actionDownY > SCROLL_DISTANCE) {
 				if(DEBUG) Log.e(TAG, "gesture down");
 				doScrollDown();
 			} else if (actionDownY - actionUpY > SCROLL_DISTANCE) {
 				if(DEBUG) Log.e(TAG, "gesture up");
 				doScrollUp();
+			} else if (actionUpX - actionDownX > SCROLL_DISTANCE) { // add scroll left and scroll right
+				if(DEBUG) Log.e(TAG, "gesture right");
+				doScrollRight();
+			} else if (actionDownX - actionUpX > SCROLL_DISTANCE) {
+				if(DEBUG) Log.e(TAG, "gesture left");
+				doScrollLeft();
 			}
 		}
 		return true;
+	}
+	
+	private void doScrollRight() {
+		// show index, called activity do the thing
+	}
+	
+	private void doScrollLeft() {
+		//hide index
 	}
 	
 	private void doScrollDown() {
