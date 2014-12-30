@@ -321,35 +321,35 @@ public class IndexLayout extends LinearLayout {
 			// hide stop (x1, y1) -> (x1 - r * (1 - cosa), y1 - r * sina)
 			// hide stop (x2, y2) -> (x1 + r * (1 - cosa), y1 + r * sina)
 			private float getHideStartVX() {
-				return (float) (getHorizontalStartX() - getRadius() * (1 - Math.cos(angle)));
+				return (float) (getHorizontalStartX() + getRadius() * (1 - Math.cos(angle)));
 			}
 			
 			private float getHideStartVY() {
-				return (float) (getHorizontalStartY() - getRadius() * Math.sin(angle));
+				return (float) (getHorizontalStartY() + getRadius() * Math.sin(angle));
 			}
 			
 			private float getHideStopVX() {
-				return (float) (getHorizontalStopX() + getRadius() * (1 - Math.cos(angle)));
+				return (float) (getHorizontalStopX() - getRadius() * (1 - Math.cos(angle)));
 			}
 			
 			private float getHideStopVY() {
-				return (float) (getHorizontalStopY() + getRadius() * Math.sin(angle));
+				return (float) (getHorizontalStopY() - getRadius() * Math.sin(angle));
 			}
 			
 			private float getHideStartHX() {
-				return (float) (getHorizontalStartX() - getRadius() * (1 - Math.cos(2 * angle)));
+				return (float) (getHorizontalStartX() + getRadius() * (1 - Math.cos(2 * angle)));
 			}
 			
 			private float getHideStartHY() {
-				return (float) (getHorizontalStartY() - getRadius() * Math.sin(2 * angle));
+				return (float) (getHorizontalStartY() + getRadius() * Math.sin(2 * angle));
 			}
 			
 			private float getHideStopHX() {
-				return (float) (getHorizontalStopX() + getRadius() * (1 - Math.cos(2 * angle)));
+				return (float) (getHorizontalStopX() - getRadius() * (1 - Math.cos(2 * angle)));
 			}
 			
 			private float getHideStopHY() {
-				return (float) (getHorizontalStopY() + getRadius() * Math.sin(2 * angle));
+				return (float) (getHorizontalStopY() - getRadius() * Math.sin(2 * angle));
 			}
 			
 			// show stop (x1, y1) -> (x1 + r * (1 - cosa), y1 - r * sina)
