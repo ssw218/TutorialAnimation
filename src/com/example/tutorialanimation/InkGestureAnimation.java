@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +49,7 @@ public class InkGestureAnimation extends View {
 	private String mAnimationName;
 	private int mAnimationId;
 	
+	private static Drawable mNormal;
 	private Bitmap mBeforeGesture;
 	private Bitmap mAfterGesture;
 	private Bitmap mGesture;
@@ -79,13 +81,7 @@ public class InkGestureAnimation extends View {
 	
 	final float SCALE = 4 / 5;
 	
-	private void init(Context context, AttributeSet attrs) {
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.InkGestureAnimation);
-//		Log.e(TAG, "length : " + a.length() + " " + a.hasValue(R.styleable.InkGestureAnimation_animation));
-		mAnimationId = a.getInt(R.styleable.InkGestureAnimation_animation, DEFINED_VALUE);
-		if(DEBUG) Log.v(TAG, "InkGestureAnimation_animation: " + mAnimationId);
-		a.recycle();
-		
+	private void init() {
 		mAnimationName = findAnimationName(mAnimationId);
 		
 		mGesture = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_handwriting_gesture);
@@ -105,6 +101,16 @@ public class InkGestureAnimation extends View {
 			case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
 			case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
 		}
+	}
+	
+	private void init(Context context, AttributeSet attrs) {
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.InkGestureAnimation);
+//		Log.e(TAG, "length : " + a.length() + " " + a.hasValue(R.styleable.InkGestureAnimation_animation));
+		mAnimationId = a.getInt(R.styleable.InkGestureAnimation_animation, DEFINED_VALUE);
+		if(DEBUG) Log.v(TAG, "InkGestureAnimation_animation: " + mAnimationId);
+		a.recycle();
+		
+		init();
 	}
 	
 	private void initDeleteInkAnimation() {
