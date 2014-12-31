@@ -33,7 +33,7 @@ public class IndexLayout extends LinearLayout {
 		mContext = context;
 		mResources = mContext.getResources();
 		setOrientation(VERTICAL);
-		setBackgroundColor(0xFFD0F8CE);
+		setBackgroundColor(mResources.getColor(R.color.indext_layout_background));
 		LayoutParams l = (LayoutParams) getLayoutParams();
 		if(l == null)
 			l = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -48,13 +48,20 @@ public class IndexLayout extends LinearLayout {
 	}
 	
 	private class Directory extends TextView {
-
+		// default size
+		private static final int PADDING_LEFT_DEFAULT = 10;
+		private static final int PADDING_TOP_DEFAULT = 10;
+		private static final int PADDING_RIGHT_DEFAULT = 10;
+		private static final int PADDING_BOTTOM_DEFAULT = 10;
+		private static final int TEXT_SIZE_DEFAULT = 30;
+	
 		public Directory(Context context) {
 			super(context);
-			setText("Tutorial");
-			setTextSize(30);
-			setBackgroundColor(0xFF22B14C);
-			setPadding(10, 10, 10, 10);
+			setText(mResources.getString(R.string.first_directory_item_text));
+			setTextSize(TEXT_SIZE_DEFAULT);
+			setTextColor(mResources.getColor(R.color.first_directory_item_text));
+			setBackgroundColor(mResources.getColor(R.color.first_directory_item_background));
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 		}
 		
 	}

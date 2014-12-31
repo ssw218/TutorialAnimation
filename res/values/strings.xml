@@ -41,6 +41,7 @@
         <item >Select text</item>
         <item >Insert text</item>
     </string-array>
+    <string name="first_directory_item_text">Tutorial</string>
     <string name="first_directory_text_default">Tutorial</string>
     <string name="second_directory_text_default">Ink Gesture</string>
     <string name="third_directory_text_default">Ink Delete</string>
