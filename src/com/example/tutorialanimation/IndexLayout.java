@@ -82,6 +82,16 @@ public class IndexLayout extends LinearLayout {
 		
 	}
 	
+	public interface OnThirdClickListener {
+		public void onClick(View v);
+	}
+	
+	private OnThirdClickListener mOnThirdClickListener;
+	
+	public void setThirdClickListener(OnThirdClickListener onThirdClickListener) {
+		mOnThirdClickListener = onThirdClickListener;
+	}
+	
 	private class ListLayout extends LinearLayout {
 		
 		private static final String TAG = "ListLayout";
@@ -91,13 +101,11 @@ public class IndexLayout extends LinearLayout {
 		
 		// click child directory
 		private OnClickListener mChildClickListenr = new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+//				if (DEBUG) Log.e(TAG, "Click: " + v);
+				mOnThirdClickListener.onClick(v);
 			}
-			
 		};
 		
 		public ListLayout(Context context, int id) {
@@ -160,7 +168,7 @@ public class IndexLayout extends LinearLayout {
 					} else {
 						v.setBackgroundColor(mResources.getColor(R.color.third_directory_item_background_normal));
 					}
-					return true;
+					return false;
 				}
 				
 			};

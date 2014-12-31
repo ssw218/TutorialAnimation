@@ -29,6 +29,10 @@ public class IndexFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 	
+	public void setThirdClickListener(IndexLayout.OnThirdClickListener listener) {
+		mIndexLayout.setThirdClickListener(listener);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {

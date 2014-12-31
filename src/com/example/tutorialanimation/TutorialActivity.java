@@ -31,6 +31,40 @@ public class TutorialActivity extends Activity {
 	private IndexFragment mIndexFragment;
 	private ContentFragment mContentFragment;
 	
+	private ContentLayout.ScrollEvent mScrollEvent = new ContentLayout.ScrollEvent() {
+
+		@Override
+		public void onScrollRight() {
+			FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+			// judge if show
+			fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+			fragmentTransaction.show(mIndexFragment);
+			fragmentTransaction.commit();
+		}
+
+		@Override
+		public void onScrollLeft() {
+			FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+			// judge if hide
+			fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+			fragmentTransaction.hide(mIndexFragment);
+			fragmentTransaction.commit();
+		}
+		
+	};
+	
+	private IndexLayout.OnThirdClickListener mOnThirdClickListener = new IndexLayout.OnThirdClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					TextView view = (TextView) v;
+					mContentFragment.thirdClick(view);
+//					if (DEBUG) Log.e(TAG, "Click: " + v);
+				}
+		
+	};
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,37 +74,8 @@ public class TutorialActivity extends Activity {
         mFragmentManager = getFragmentManager();
         mIndexFragment = (IndexFragment) mFragmentManager.findFragmentById(R.id.index_fragment);
         mContentFragment = (ContentFragment) mFragmentManager.findFragmentById(R.id.content_fragment);
-        
-//        mIndexFragment = new IndexFragment();
-//        mContentFragment = new ContentFragment();
-//        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.index_fragment, mIndexFragment);
-//        fragmentTransaction.add(R.id.content_fragment, mContentFragment);
-//        fragmentTransaction.commit();
-        
-//        textView = (TextView) this.findViewById(R.id.textView);
-//        textView.setOnClickListener(new OnClickListener() {
-//        	boolean turn = true;
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				if(DEBUG) Log.e(TAG, "onClick");
-//				
-//				FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-//				fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-//				if (turn) {
-//					fragmentTransaction.hide(mIndexFragment);
-//					fragmentTransaction.commit();
-//					turn = false;
-//				}
-//				else {
-//					fragmentTransaction.show(mIndexFragment);
-//					fragmentTransaction.commit();
-//					turn = true;
-//				}
-//			}
-//        	
-//        });
+        mContentFragment.setScrollEvent(mScrollEvent);
+        mIndexFragment.setThirdClickListener(mOnThirdClickListener);
     }
     
     public void onConfigurationChanged(Configuration newConfig) {

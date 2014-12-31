@@ -122,7 +122,7 @@ public class ContentLayout extends LinearLayout {
 		// update size: text and animation
 	}
 	
-	static final int SCROLL_DISTANCE = 50;
+	static final int SCROLL_DISTANCE = 100;
 	float actionDownY;
 	float actionUpY;
 	float actionDownX;
@@ -139,29 +139,46 @@ public class ContentLayout extends LinearLayout {
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
 			actionUpY = event.getY();
 			actionUpX = event.getX();
-			if (actionUpY - actionDownY > SCROLL_DISTANCE) {
-				if(DEBUG) Log.e(TAG, "gesture down");
-				doScrollDown();
-			} else if (actionDownY - actionUpY > SCROLL_DISTANCE) {
-				if(DEBUG) Log.e(TAG, "gesture up");
-				doScrollUp();
-			} else if (actionUpX - actionDownX > SCROLL_DISTANCE) { // add scroll left and scroll right
-				if(DEBUG) Log.e(TAG, "gesture right");
-				doScrollRight();
-			} else if (actionDownX - actionUpX > SCROLL_DISTANCE) {
-				if(DEBUG) Log.e(TAG, "gesture left");
-				doScrollLeft();
+			if (Math.abs(actionDownX - actionUpX) < SCROLL_DISTANCE) {
+				if (actionUpY - actionDownY > SCROLL_DISTANCE) {
+					if(DEBUG) Log.e(TAG, "gesture down");
+					doScrollDown();
+				} else if (actionDownY - actionUpY > SCROLL_DISTANCE) {
+					if(DEBUG) Log.e(TAG, "gesture up");
+					doScrollUp();
+				}
+			} else if (Math.abs(actionDownY - actionUpY) < SCROLL_DISTANCE) {
+				if (actionUpX - actionDownX > SCROLL_DISTANCE) { // add scroll left and scroll right
+					if(DEBUG) Log.e(TAG, "gesture right");
+					doScrollRight();
+				} else if (actionDownX - actionUpX > SCROLL_DISTANCE) {
+					if(DEBUG) Log.e(TAG, "gesture left");
+					doScrollLeft();
+				}
 			}
 		}
 		return true;
 	}
 	
+	public interface ScrollEvent{
+		public void onScrollRight();
+		public void onScrollLeft();
+	}
+	
+	public void setScrollEvent(ScrollEvent scrollEvent) {
+		mScrollEvent = scrollEvent;
+	}
+	
+	private ScrollEvent mScrollEvent;
+	
 	private void doScrollRight() {
 		// show index, called activity do the thing
+		mScrollEvent.onScrollRight();
 	}
 	
 	private void doScrollLeft() {
-		//hide index
+		//hide index, called activity do the thing
+		mScrollEvent.onScrollLeft();
 	}
 	
 	private void doScrollDown() {

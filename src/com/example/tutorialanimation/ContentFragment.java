@@ -36,6 +36,14 @@ public class ContentFragment extends Fragment {
 		return mContentLayout;
 	}
 	
+	public void thirdClick(TextView view) {
+		mContentLayout.onDirectoryClick(view);
+	}
+	
+	public void setScrollEvent(ContentLayout.ScrollEvent scrollEvent) {
+		mContentLayout.setScrollEvent(scrollEvent);
+	}
+	
 	public void onDirectoryClick(TextView view) {
 		mContentLayout.onDirectoryClick(view);
 	}
