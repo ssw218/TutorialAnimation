@@ -145,10 +145,13 @@ public class InkGestureAnimation extends View {
 	}
 	
 	private void initDeleteInkAnimation() {
-		mGestureMatrix = new Matrix();
-		mGestureMatrix.postTranslate(500, 300);
 		mBeforeGesture = BitmapFactory.decodeResource(getResources(), R.drawable.handwriting_normal);
 		mAfterGesture = BitmapFactory.decodeResource(getResources(), R.drawable.handwriting_delete_after);
+		mGestureMatrix = new Matrix();
+		float dx = mBeforeGesture.getWidth() * 3 / 4;
+		float dy = mBeforeGesture.getHeight() * 3 / 4;
+//		if (DEBUG) Log.e(TAG, "width: " + width + " height: " + height); width: 668 height: 402  500 300
+		mGestureMatrix.postTranslate(dx, dy);
 	}
 	
 	private void initEraseAllInkAnimation() {
@@ -176,26 +179,36 @@ public class InkGestureAnimation extends View {
 	
 	int width = 1;
 	int velocity = 0;
+	long stopTime = 0;
 	final int ACCELERATION = 1;
 	final int DELAY_TIME = 40;
 	final int STOP_TIME = 1000;
 	
 	private void drawDeleteInkAnimation(Canvas canvas) {
-		canvas.drawBitmap(mBeforeGesture, mNormalMatrix, mPaint);
-		Bitmap bitmap = Bitmap.createBitmap(mGesture, 0, 0, width, mGesture.getHeight());
-		canvas.drawBitmap(bitmap, mGestureMatrix, mPaint);
+		if(width < mGesture.getWidth()) {
+			canvas.drawBitmap(mBeforeGesture, mNormalMatrix, mPaint);
+			Bitmap bitmap = Bitmap.createBitmap(mGesture, 0, 0, width, mGesture.getHeight());
+			canvas.drawBitmap(bitmap, mGestureMatrix, mPaint);
+			
+			long i = System.currentTimeMillis(); 
+			while(System.currentTimeMillis() - i < DELAY_TIME);
+
+		} else {
+			canvas.drawBitmap(mAfterGesture, mNormalMatrix, mPaint);
+			if (width < mGesture.getWidth() + velocity) {
+				stopTime = System.currentTimeMillis();
+			} else {
+				while(System.currentTimeMillis() - stopTime < STOP_TIME);
+				width = 1;
+				velocity = 0;
+			}
+		}
 //		if (!bitmap.isRecycled()) {
 //			bitmap.recycle();
 //			bitmap = null;
 //		}
 		velocity += ACCELERATION;
 		width += velocity;
-		if(width > mGesture.getWidth()) {
-			width = 1;
-			velocity = 0;
-		}
-		long i = System.currentTimeMillis(); 
-		while(System.currentTimeMillis() - i < DELAY_TIME);
 		invalidate();
 	}
 	
@@ -205,6 +218,38 @@ public class InkGestureAnimation extends View {
 	
 	private void drawNormalAnimation(Canvas canvas) {
 		canvas.drawBitmap(mNormal, mNormalMatrix, mPaint);
+	}
+	
+	public void setAnimationName(String name) {
+		int id;
+		id = ANIMATION_DELETE_INK_ID;
+		setAnimationId(id);
+	}
+	
+	// called by ContentLayout
+	public void setAnimationId(int id) {
+		mAnimationId = id;
+		// animation stop
+		onAnimationChanged();
+		mCurrentAnimation = ANIMATION_NORMAL;
+		initDraw();
+		invalidate();
+	}
+	
+	// called when scroll up or scroll down or choose the other third directory
+	private void onAnimationChanged() {
+		Bitmap bitmap1 = mBeforeGesture;
+		mBeforeGesture = null;
+		if (bitmap1 != null && !bitmap1.isRecycled()) {
+			bitmap1.recycle();
+			bitmap1 = null;
+		}
+		Bitmap bitmap2 = mAfterGesture;
+		mAfterGesture = null;
+		if (bitmap2 != null && !bitmap2.isRecycled()) {
+			bitmap2.recycle();
+			bitmap2 = null;
+		}
 	}
 	
 	private String findAnimationName(int id) {

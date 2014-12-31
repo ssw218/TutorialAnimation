@@ -205,7 +205,7 @@ public class ContentLayout extends LinearLayout {
 		}
 		mThirdDirectory.setText(mTutorialManager.getPreviousThirdDirectory(mThirdDirectory.getText().toString()));
 		mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
-		// for animation
+		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
 	}
 	
 	private void doScrollUp() {
@@ -234,7 +234,7 @@ public class ContentLayout extends LinearLayout {
 			mThirdDirectory.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
 			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
 		}
-		// for animation
+		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
 	}
 	
 	// called by ContentFragment
