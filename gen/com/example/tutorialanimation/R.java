@@ -1668,20 +1668,22 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020030;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020031;
         public static final int abc_textfield_search_material=0x7f020032;
-        public static final int ic_bar_green_material_dark_theme=0x7f020033;
-        public static final int ic_bar_unlock_material_light_theme=0x7f020034;
-        public static final int ic_launcher=0x7f020035;
-        public static final int normal=0x7f020036;
-        public static final int tutorial_bubble_delete=0x7f020037;
-        public static final int tutorial_bubble_normal=0x7f020038;
-        public static final int tutorial_handwriting_delete=0x7f020039;
-        public static final int tutorial_handwriting_erase_all_normal=0x7f02003a;
-        public static final int tutorial_handwriting_erase_all_result=0x7f02003b;
-        public static final int tutorial_handwriting_gesture=0x7f02003c;
-        public static final int tutorial_handwriting_normal=0x7f02003d;
-        public static final int tutorial_page_gesture=0x7f02003e;
-        public static final int tutorial_page_material_dark_theme=0x7f02003f;
-        public static final int tutorial_page_material_light_theme=0x7f020040;
+        public static final int handwriting_delete_after=0x7f020033;
+        public static final int handwriting_normal=0x7f020034;
+        public static final int ic_bar_green_material_dark_theme=0x7f020035;
+        public static final int ic_bar_unlock_material_light_theme=0x7f020036;
+        public static final int ic_launcher=0x7f020037;
+        public static final int tutorial_bubble_delete=0x7f020038;
+        public static final int tutorial_bubble_normal=0x7f020039;
+        public static final int tutorial_handwriting_delete=0x7f02003a;
+        public static final int tutorial_handwriting_erase_all_normal=0x7f02003b;
+        public static final int tutorial_handwriting_erase_all_result=0x7f02003c;
+        public static final int tutorial_handwriting_gesture=0x7f02003d;
+        public static final int tutorial_handwriting_normal=0x7f02003e;
+        public static final int tutorial_normal=0x7f02003f;
+        public static final int tutorial_page_gesture=0x7f020040;
+        public static final int tutorial_page_material_dark_theme=0x7f020041;
+        public static final int tutorial_page_material_light_theme=0x7f020042;
     }
     public static final class id {
         public static final int action_bar=0x7f09003c;

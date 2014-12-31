@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -33,23 +34,27 @@ public class InkGestureAnimation extends View {
 	private static final String ANIMATION_SELECT_TEXT_TYPESET = "typeset select text";
 	private static final String ANIMATION_INSERT_TEXT_TYPESET = "typeset insert text";
 	
-	private static final int ANIMATION_DELETE_INK_ID = 1;
-	private static final int ANIMATION_ERASE_ALL_INK_ID = 2;
-	private static final int ANIMATION_RETURN_INK_ID = 3;
-	private static final int ANIMATION_TAB_INK_ID = 4;
-	private static final int ANIMATION_DELETE_TYPESET_ID = 5;
-	private static final int ANIMATION_INSERT_SPACE_TYPESET_ID = 6;
-	private static final int ANIMATION_ERASE_ALL_TYPESET_ID = 7;
-	private static final int ANIMATION_RETURN_TYPESER_ID = 8;
-	private static final int ANIMATION_TAB_TYPESET_ID = 9;
-	private static final int ANIMATION_SELECT_TEXT_TYPESET_ID = 10;
-	private static final int ANIMATION_INSERT_TEXT_TYPESET_ID = 11;
-	private static final int DEFINED_VALUE = -1;
+	public static final int ANIMATION_NORMAL = 0;
+	public static final int ANIMATION_DELETE_INK_ID = 1;
+	public static final int ANIMATION_ERASE_ALL_INK_ID = 2;
+	public static final int ANIMATION_RETURN_INK_ID = 3;
+	public static final int ANIMATION_TAB_INK_ID = 4;
+	public static final int ANIMATION_DELETE_TYPESET_ID = 5;
+	public static final int ANIMATION_INSERT_SPACE_TYPESET_ID = 6;
+	public static final int ANIMATION_ERASE_ALL_TYPESET_ID = 7;
+	public static final int ANIMATION_RETURN_TYPESER_ID = 8;
+	public static final int ANIMATION_TAB_TYPESET_ID = 9;
+	public static final int ANIMATION_SELECT_TEXT_TYPESET_ID = 10;
+	public static final int ANIMATION_INSERT_TEXT_TYPESET_ID = 11;
+	public static final int DEFINED_VALUE = -1;
+	
+	private Context mContext;
 	
 	private String mAnimationName;
 	private int mAnimationId;
+	private int mCurrentAnimation;
 	
-	private static Drawable mNormal;
+	private Bitmap mNormal;
 	private Bitmap mBeforeGesture;
 	private Bitmap mAfterGesture;
 	private Bitmap mGesture;
@@ -57,9 +62,28 @@ public class InkGestureAnimation extends View {
 	private Matrix mNormalMatrix;
 	private Matrix mGestureMatrix;
 	
+	private Paint mPaint;
+	
+	private OnClickListener mOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if (DEBUG) Log.e(TAG, "Animation clicked");
+			if (mCurrentAnimation == ANIMATION_NORMAL) {
+				mCurrentAnimation = mAnimationId;
+				initDraw();
+				invalidate();
+			}
+			
+		}
+		
+	};
+	
 	public InkGestureAnimation(Context context, int index) {
 		super(context);
-		//init(context, attrs);
+		mAnimationId = index;
+		init(context);
 	}
 	
 	public InkGestureAnimation(Context context, AttributeSet attrs) {
@@ -79,28 +103,36 @@ public class InkGestureAnimation extends View {
 		init(context, attrs);
 	}
 	
-	final float SCALE = 4 / 5;
+	final float SCALE = 1;
 	
-	private void init() {
+	private void init(Context context) {
+		mContext = context;
 		mAnimationName = findAnimationName(mAnimationId);
+		mCurrentAnimation = ANIMATION_NORMAL;
+		setOnClickListener(mOnClickListener);
 		
+		mNormal = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_normal);
 		mGesture = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_handwriting_gesture);
 		mNormalMatrix = new Matrix();
 		mNormalMatrix.postScale(SCALE, SCALE);
+		mPaint = new Paint();
 		
-		switch (mAnimationId) {
-			case ANIMATION_DELETE_INK_ID : 		initDeleteInkAnimation(); break;
-			case ANIMATION_ERASE_ALL_INK_ID : 	initEraseAllInkAnimation(); break;
-			case ANIMATION_RETURN_INK_ID : break;
-			case ANIMATION_TAB_INK_ID : break;
-			case ANIMATION_DELETE_TYPESET_ID : break;
-			case ANIMATION_INSERT_SPACE_TYPESET_ID : break;
-			case ANIMATION_ERASE_ALL_TYPESET_ID : break;
-			case ANIMATION_RETURN_TYPESER_ID : break;
-			case ANIMATION_TAB_TYPESET_ID: break;
-			case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
-			case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
-		}
+	}
+	
+	private void initDraw() {
+		switch (mCurrentAnimation) {
+		case ANIMATION_DELETE_INK_ID : 		initDeleteInkAnimation(); break;
+		case ANIMATION_ERASE_ALL_INK_ID : 	initEraseAllInkAnimation(); break;
+		case ANIMATION_RETURN_INK_ID : break;
+		case ANIMATION_TAB_INK_ID : break;
+		case ANIMATION_DELETE_TYPESET_ID : break;
+		case ANIMATION_INSERT_SPACE_TYPESET_ID : break;
+		case ANIMATION_ERASE_ALL_TYPESET_ID : break;
+		case ANIMATION_RETURN_TYPESER_ID : break;
+		case ANIMATION_TAB_TYPESET_ID: break;
+		case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
+		case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
+	}
 	}
 	
 	private void init(Context context, AttributeSet attrs) {
@@ -109,12 +141,14 @@ public class InkGestureAnimation extends View {
 		mAnimationId = a.getInt(R.styleable.InkGestureAnimation_animation, DEFINED_VALUE);
 		if(DEBUG) Log.v(TAG, "InkGestureAnimation_animation: " + mAnimationId);
 		a.recycle();
-		
-		init();
+		init(context);
 	}
 	
 	private void initDeleteInkAnimation() {
 		mGestureMatrix = new Matrix();
+		mGestureMatrix.postTranslate(500, 300);
+		mBeforeGesture = BitmapFactory.decodeResource(getResources(), R.drawable.handwriting_normal);
+		mAfterGesture = BitmapFactory.decodeResource(getResources(), R.drawable.handwriting_delete_after);
 	}
 	
 	private void initEraseAllInkAnimation() {
@@ -123,13 +157,10 @@ public class InkGestureAnimation extends View {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		Paint paint = new Paint();
-		Bitmap bitmap = mGesture = BitmapFactory.decodeResource(getResources(), R.drawable.normal);
-		Matrix matrix = new Matrix();
-		canvas.drawBitmap(bitmap, matrix, paint);
-		switch (mAnimationId) {
-			case ANIMATION_DELETE_INK_ID : 		drawDeleteInkAnimation(); break;
-			case ANIMATION_ERASE_ALL_INK_ID : 	drawEraseAllInkAnimation(); break;
+		switch (mCurrentAnimation) {
+			case ANIMATION_NORMAL:				drawNormalAnimation(canvas); break;
+			case ANIMATION_DELETE_INK_ID : 		drawDeleteInkAnimation(canvas); break;
+			case ANIMATION_ERASE_ALL_INK_ID : 	drawEraseAllInkAnimation(canvas); break;
 			case ANIMATION_RETURN_INK_ID : break;
 			case ANIMATION_TAB_INK_ID : break;
 			case ANIMATION_DELETE_TYPESET_ID : break;
@@ -143,18 +174,37 @@ public class InkGestureAnimation extends View {
 		//invalidate();
 	}
 	
-	int width = 0;
+	int width = 1;
 	int velocity = 0;
 	final int ACCELERATION = 1;
-	final int DELAY_TIME = 1000;
+	final int DELAY_TIME = 40;
 	final int STOP_TIME = 1000;
 	
-	private void drawDeleteInkAnimation() {
+	private void drawDeleteInkAnimation(Canvas canvas) {
+		canvas.drawBitmap(mBeforeGesture, mNormalMatrix, mPaint);
+		Bitmap bitmap = Bitmap.createBitmap(mGesture, 0, 0, width, mGesture.getHeight());
+		canvas.drawBitmap(bitmap, mGestureMatrix, mPaint);
+//		if (!bitmap.isRecycled()) {
+//			bitmap.recycle();
+//			bitmap = null;
+//		}
+		velocity += ACCELERATION;
+		width += velocity;
+		if(width > mGesture.getWidth()) {
+			width = 1;
+			velocity = 0;
+		}
+		long i = System.currentTimeMillis(); 
+		while(System.currentTimeMillis() - i < DELAY_TIME);
+		invalidate();
+	}
+	
+	private void drawEraseAllInkAnimation(Canvas canvas) {
 		
 	}
 	
-	private void drawEraseAllInkAnimation() {
-		
+	private void drawNormalAnimation(Canvas canvas) {
+		canvas.drawBitmap(mNormal, mNormalMatrix, mPaint);
 	}
 	
 	private String findAnimationName(int id) {
@@ -181,8 +231,7 @@ public class InkGestureAnimation extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.normal);
-		setMeasuredDimension(bitmap.getWidth(), bitmap.getHeight());
+		setMeasuredDimension(mNormal.getWidth(), mNormal.getHeight());
 	}
 
 }
