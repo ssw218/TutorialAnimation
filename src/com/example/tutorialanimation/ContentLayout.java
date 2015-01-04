@@ -262,6 +262,7 @@ public class ContentLayout extends LinearLayout {
 				mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
 			}
 		}
+		mAnimation.startAnimation();
 	}
 	
 	private class FirstDirectory extends TextView {

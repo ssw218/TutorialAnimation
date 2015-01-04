@@ -71,14 +71,18 @@ public class InkGestureAnimation extends View {
 			// TODO Auto-generated method stub
 			if (DEBUG) Log.e(TAG, "Animation clicked");
 			if (mCurrentAnimation == ANIMATION_NORMAL) {
-				mCurrentAnimation = mAnimationId;
-				initDraw();
-				invalidate();
+				startAnimation();
 			}
 			
 		}
 		
 	};
+	
+	public void startAnimation() {
+		mCurrentAnimation = mAnimationId;
+		initDraw();
+		invalidate();
+	}
 	
 	public InkGestureAnimation(Context context, int index) {
 		super(context);
@@ -108,9 +112,10 @@ public class InkGestureAnimation extends View {
 	private void init(Context context) {
 		mContext = context;
 		mAnimationName = findAnimationName(mAnimationId);
-		mCurrentAnimation = ANIMATION_NORMAL;
-		setOnClickListener(mOnClickListener);
+		mCurrentAnimation = mAnimationId;
+		initDraw();
 		
+		setOnClickListener(mOnClickListener);
 		mNormal = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_normal);
 		mGesture = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_handwriting_gesture);
 		mNormalMatrix = new Matrix();
@@ -121,18 +126,18 @@ public class InkGestureAnimation extends View {
 	
 	private void initDraw() {
 		switch (mCurrentAnimation) {
-		case ANIMATION_DELETE_INK_ID : 		initDeleteInkAnimation(); break;
-		case ANIMATION_ERASE_ALL_INK_ID : 	initEraseAllInkAnimation(); break;
-		case ANIMATION_RETURN_INK_ID : break;
-		case ANIMATION_TAB_INK_ID : break;
-		case ANIMATION_DELETE_TYPESET_ID : break;
-		case ANIMATION_INSERT_SPACE_TYPESET_ID : break;
-		case ANIMATION_ERASE_ALL_TYPESET_ID : break;
-		case ANIMATION_RETURN_TYPESER_ID : break;
-		case ANIMATION_TAB_TYPESET_ID: break;
-		case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
-		case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
-	}
+			case ANIMATION_DELETE_INK_ID : 		initDeleteInkAnimation(); break;
+			case ANIMATION_ERASE_ALL_INK_ID : 	initEraseAllInkAnimation(); break;
+			case ANIMATION_RETURN_INK_ID : break;
+			case ANIMATION_TAB_INK_ID : break;
+			case ANIMATION_DELETE_TYPESET_ID : break;
+			case ANIMATION_INSERT_SPACE_TYPESET_ID : break;
+			case ANIMATION_ERASE_ALL_TYPESET_ID : break;
+			case ANIMATION_RETURN_TYPESER_ID : break;
+			case ANIMATION_TAB_TYPESET_ID: break;
+			case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
+			case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
+		}
 	}
 	
 	private void init(Context context, AttributeSet attrs) {
@@ -201,6 +206,7 @@ public class InkGestureAnimation extends View {
 				while(System.currentTimeMillis() - stopTime < STOP_TIME);
 				width = 1;
 				velocity = 0;
+				doAnimationEnd();
 			}
 		}
 //		if (!bitmap.isRecycled()) {
@@ -231,13 +237,18 @@ public class InkGestureAnimation extends View {
 		mAnimationId = id;
 		// animation stop
 		onAnimationChanged();
-		mCurrentAnimation = ANIMATION_NORMAL;
 		initDraw();
 		invalidate();
 	}
 	
 	// called when scroll up or scroll down or choose the other third directory
 	private void onAnimationChanged() {
+		doAnimationEnd();
+	}
+	
+	private void doAnimationEnd() {
+		mCurrentAnimation = ANIMATION_NORMAL;
+		
 		Bitmap bitmap1 = mBeforeGesture;
 		mBeforeGesture = null;
 		if (bitmap1 != null && !bitmap1.isRecycled()) {
