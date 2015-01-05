@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Picture;
@@ -33,6 +34,7 @@ public class InkGestureAnimation extends View {
 	private static final String ANIMATION_TAB_TYPESET = "typeset tab";
 	private static final String ANIMATION_SELECT_TEXT_TYPESET = "typeset select text";
 	private static final String ANIMATION_INSERT_TEXT_TYPESET = "typeset insert text";
+	private static final String ANIMATION_BASIC_FIRST = "";
 	
 	public static final int ANIMATION_NORMAL = 0;
 	public static final int ANIMATION_DELETE_INK_ID = 1;
@@ -46,6 +48,7 @@ public class InkGestureAnimation extends View {
 	public static final int ANIMATION_TAB_TYPESET_ID = 9;
 	public static final int ANIMATION_SELECT_TEXT_TYPESET_ID = 10;
 	public static final int ANIMATION_INSERT_TEXT_TYPESET_ID = 11;
+	public static final int ANIMATION_BASIC_FIRST_ID = 12;
 	public static final int DEFINED_VALUE = -1;
 	
 	private Context mContext;
@@ -134,9 +137,10 @@ public class InkGestureAnimation extends View {
 			case ANIMATION_INSERT_SPACE_TYPESET_ID : break;
 			case ANIMATION_ERASE_ALL_TYPESET_ID : break;
 			case ANIMATION_RETURN_TYPESER_ID : break;
-			case ANIMATION_TAB_TYPESET_ID: break;
-			case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
+			case ANIMATION_TAB_TYPESET_ID : break;
+			case ANIMATION_SELECT_TEXT_TYPESET_ID : break;
 			case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
+			case ANIMATION_BASIC_FIRST_ID : initBasicFirstAnimation(); break;
 		}
 	}
 	
@@ -147,6 +151,11 @@ public class InkGestureAnimation extends View {
 		if(DEBUG) Log.v(TAG, "InkGestureAnimation_animation: " + mAnimationId);
 		a.recycle();
 		init(context);
+	}
+	
+	private void initBasicFirstAnimation() {
+		mAfterGesture = BitmapFactory.decodeResource(getResources(), R.drawable.handwriting_first_after);
+		skip = 1;
 	}
 	
 	private void initDeleteInkAnimation() {
@@ -178,8 +187,58 @@ public class InkGestureAnimation extends View {
 			case ANIMATION_TAB_TYPESET_ID: break;
 			case ANIMATION_SELECT_TEXT_TYPESET_ID: break;
 			case ANIMATION_INSERT_TEXT_TYPESET_ID : break;
+			case ANIMATION_BASIC_FIRST_ID : drawBasicFirstAnimation(canvas); break;
 		}
 		//invalidate();
+	}
+	
+	Paint circle = new Paint();
+	int skip = 1;
+	private void drawBasicFirstAnimation(Canvas canvas) {
+		if (skip >= 5) {
+			canvas.drawBitmap(mAfterGesture, mNormalMatrix, null);
+			skip += 1;
+			doDelay(2);
+		}
+		
+		mPaint.setColor(Color.BLACK);
+		mPaint.setStrokeWidth(2);
+		canvas.drawLine(30, 335, 620, 335, mPaint);
+		if (DRAW_DEBUG) Log.v(TAG, "skip: " + skip);
+		if (skip == 1) {	
+			skip = 2;
+			doDelay(2);
+			invalidate();
+		}
+		
+		if (skip == 2 || skip == 4) {
+			circle.setColor(0x55888888);
+			canvas.drawCircle(100, 310, 30, circle);
+			skip += 1;
+			doDelay(2);
+			invalidate();
+		}
+		
+		if (skip == 3) {
+			circle.setColor(0xff888888);
+			canvas.drawCircle(100, 310, 40, circle);
+			skip = 4;
+			doDelay(2);
+		}
+		
+		if (skip == 6) {
+			stopTime = System.currentTimeMillis();
+		} else if (skip > 6) {
+			while(System.currentTimeMillis() - stopTime < STOP_TIME);
+			doAnimationEnd();
+			skip = 1;
+		}
+		invalidate();
+	}
+	
+	private void doDelay(int time) {
+		long i = System.currentTimeMillis(); 
+		while(System.currentTimeMillis() - i < DELAY_TIME * time);
 	}
 	
 	int width = 1;
@@ -191,15 +250,14 @@ public class InkGestureAnimation extends View {
 	
 	private void drawDeleteInkAnimation(Canvas canvas) {
 		if(width < mGesture.getWidth()) {
-			canvas.drawBitmap(mBeforeGesture, mNormalMatrix, mPaint);
+			canvas.drawBitmap(mBeforeGesture, mNormalMatrix, null);
 			Bitmap bitmap = Bitmap.createBitmap(mGesture, 0, 0, width, mGesture.getHeight());
-			canvas.drawBitmap(bitmap, mGestureMatrix, mPaint);
+			canvas.drawBitmap(bitmap, mGestureMatrix, null);
 			
-			long i = System.currentTimeMillis(); 
-			while(System.currentTimeMillis() - i < DELAY_TIME);
+			doDelay(1);
 
 		} else {
-			canvas.drawBitmap(mAfterGesture, mNormalMatrix, mPaint);
+			canvas.drawBitmap(mAfterGesture, mNormalMatrix, null);
 			if (width < mGesture.getWidth() + velocity) {
 				stopTime = System.currentTimeMillis();
 			} else {
@@ -223,7 +281,7 @@ public class InkGestureAnimation extends View {
 	}
 	
 	private void drawNormalAnimation(Canvas canvas) {
-		canvas.drawBitmap(mNormal, mNormalMatrix, mPaint);
+		canvas.drawBitmap(mNormal, mNormalMatrix, null);
 	}
 	
 	public void setAnimationName(String name) {
@@ -267,6 +325,7 @@ public class InkGestureAnimation extends View {
 		switch (id) {
 			case DEFINED_VALUE : 
 				throw new IllegalArgumentException("we don't really get animation id");
+			case ANIMATION_BASIC_FIRST_ID :				return ANIMATION_BASIC_FIRST;
 			case ANIMATION_DELETE_INK_ID : 				return ANIMATION_DELETE_INK;
 			case ANIMATION_ERASE_ALL_INK_ID : 			return ANIMATION_ERASE_ALL_INK;
 			case ANIMATION_RETURN_INK_ID : 				return ANIMATION_RETURN_INK;

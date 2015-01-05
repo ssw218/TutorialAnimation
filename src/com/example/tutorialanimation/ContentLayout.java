@@ -75,7 +75,7 @@ public class ContentLayout extends LinearLayout {
 		mSecondDirectory = new SecondDirectory(mContext);
 		mThirdDirectory = new ThirdDirectory(mContext);
 		mContent = new Content(mContext);
-		mCurrentIndex = InkGestureAnimation.ANIMATION_DELETE_INK_ID;
+		mCurrentIndex = InkGestureAnimation.ANIMATION_BASIC_FIRST_ID;
 		mAnimation = new InkGestureAnimation(mContext, mCurrentIndex);
 		
 		LayoutParams l = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
