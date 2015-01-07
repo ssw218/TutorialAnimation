@@ -16,18 +16,28 @@
         <item >Select text</item>
         <item >Insert text</item>
     </string-array>
+    
     <string-array name="operation">
         <item >Basic operation</item>
-        <item >First</item>
-        <item >Second</item>
-        <item >Third</item>
-        <item >Fourth</item>
-        <item >Fiveth</item>
-        <item >Sixth</item>
+        <item >Active</item>
+        <item >Write</item>
+        <item >Correct/Change</item>
+        <item >Commit</item>
     </string-array>
     
-    <string-array name="content">
-        <item >Ink Gesture</item>
+    <string-array name="basic_operation_content">
+        <item >As a user hovers over an input field using the pen, it will trigger visual input from all inkable input fields on the page to give the user an idea of which fields will support ink at a glance. Fields that allow inking will be outlined in green</item>
+        <item >This particular field DOES support ink input. Inking tool icon from pen menu will be shown on hover.
+			Cursor will be placed at the beginning of the active field when the user clicks anywhere inside the field.</item>
+        <item >If the word the user is looking for is shown on the list, 
+            the user simply selects the word to swap out the misspelled word with the correct word. 
+			The change would be reflected in the OCR bubble, shown below.
+			Cookout This WIneke kwenodu! ld visually remain the same.</item>
+        <item >User is done writing and can select the convert to text button within the OCR bubble to convert the remaining ink (or it can auto convert). 
+			All text that has not been previously converted in the active input field will get converted (should be no more than 10 words).</item>
+    </string-array>
+    
+    <string-array name="ink_gesture_content">
         <item >Deletion is the act of deleting or removal by striking out material, such as a
              word or passage, that has been removed from a body of written or printed matter.</item>
         <item >Ink Erase all</item>

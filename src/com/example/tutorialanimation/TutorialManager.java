@@ -38,12 +38,16 @@ public class TutorialManager {
 	
 	private String[] mOperation;
 	private String[] mGesture;
+	private String[] mOperationContent;
+	private String[] mGestureContent;
 	
 	private TutorialManager(Context context) {
 		mContext = context;
 		mResources = mContext.getResources();
 		mOperation = mResources.getStringArray(R.array.operation);
 		mGesture = mResources.getStringArray(R.array.gesture);
+		mOperationContent = mResources.getStringArray(R.array.basic_operation_content);
+		mGestureContent = mResources.getStringArray(R.array.ink_gesture_content);
 	}
 	
 	public static TutorialManager getInstance(Context context) {
@@ -143,11 +147,6 @@ public class TutorialManager {
 		return null;
 	}
 	
-	public String getContentByThirdDirectory(String text) {
-		
-		return mResources.getStringArray(R.array.content)[1];
-	}
-	
 	public int getTextSize() {
 		updateScreenOrientation();
 		updateScreenSize();
@@ -165,6 +164,30 @@ public class TutorialManager {
 		} else {
 			throw new IllegalArgumentException("Orientation configuration is wrong"); 
 		}
+	}
+	
+	public int getBasicIndex() {
+		return mOperation.length;
+	}
+	
+	public int getGestureIndex() {
+		return mGesture.length;
+	}
+	
+	public String getBasicTD(int index) {
+		return mOperation[index];
+	}
+	
+	public String getGestureTD(int index) {
+		return mGesture[index];
+	}
+	
+	public String getBasicContent(int index) {
+		return mOperationContent[index];
+	}
+	
+	public String getGestureContent(int index) {
+		return mGestureContent[index];
 	}
 	
 	public static int dipToPx(Context context, float dip) {

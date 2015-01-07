@@ -42,15 +42,11 @@ public class ContentFragment extends Fragment {
 	}
 	
 	public void thirdClick(TextView view) {
-		mContentLayout.onDirectoryClick(view);
+		mScrollView.scrollTo(0, mContentLayout.getThirdTextViewTop(view));
 	}
 	
 	public void setScrollEvent(ContentLayout.ScrollEvent scrollEvent) {
 		mContentLayout.setScrollEvent(scrollEvent);
-	}
-	
-	public void onDirectoryClick(TextView view) {
-		mContentLayout.onDirectoryClick(view);
 	}
 	
 	public void updateSize() {

@@ -1,5 +1,7 @@
 package com.example.tutorialanimation;
 
+import java.util.ArrayList;
+
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -36,15 +38,12 @@ public class ContentLayout extends LinearLayout {
 	private int mModel;
 	private int mCurrentIndex;
 	
-	private TextView mFirstDirectory;
-	private TextView mSecondDirectory;
-	private TextView mThirdDirectory;
-	private TextView mContent;
-	// maybe a operation animation else
-	private AnimationVideo mAnimation;
-	// if two screen model
-	private TextView mThirdDirectoryExtra;
-	private TextView mContentExtra;
+	private FirstDirectory mFirstDirectory;
+	private SecondDirectory mBasicDirectory;
+	private SecondDirectory mGestureDirectory;
+	
+	private ArrayList<ThirdDirectory> mBasicThirdDirectorys;
+	private ArrayList<ThirdDirectory> mGestureThirdDirectorys; 
 	
 	public ContentLayout(Context context) {
 		super(context);
@@ -68,65 +67,52 @@ public class ContentLayout extends LinearLayout {
 		setOrientation(VERTICAL);
 		LayoutTransition layoutTransition = new LayoutTransition();
 		this.setLayoutTransition(layoutTransition);
-		mModel = judgeModel();
 	}
 	
 	private void initChildren() {
-//		mCurrentIndex = InkGestureAnimation.ANIMATION_BASIC_FIRST_ID;
+		mBasicThirdDirectorys = new ArrayList<ThirdDirectory>();
+		mGestureThirdDirectorys = new ArrayList<ThirdDirectory>();
 		
 		LayoutParams l = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		LayoutParams p = new LayoutParams(TutorialManager.dipToPx(mContext, 352), TutorialManager.dipToPx(mContext, 288));
 		//p.topMargin = mResources.getInteger(R.integer.animation_top_margin);
 		p.gravity = Gravity.CENTER;
 		
-		FirstDirectory firstDirectory = new FirstDirectory(mContext);
-		addView(firstDirectory, l);
-		SecondDirectory secondDirectory = new SecondDirectory(mContext);
-		addView(secondDirectory, l);
+		mFirstDirectory = new FirstDirectory(mContext);
+		addView(mFirstDirectory, l);
+		mBasicDirectory = new SecondDirectory(mContext, mTutorialManager.getFirstSecondDirectory());
+		addView(mBasicDirectory, l);
 		
-		for (int i = 0; i < 4; i++) {
-		
-			ThirdDirectory thirdDirectory = new ThirdDirectory(mContext);
-			Content content = new Content(mContext);	
-			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_BASIC_FIRST + i);
+		int length = 0;
+		for (int i = 1; i < mTutorialManager.getBasicIndex(); i++, length++) {
+			ThirdDirectory thirdDirectory = new ThirdDirectory(mContext, mTutorialManager.getBasicTD(i));
+			mBasicThirdDirectorys.add(thirdDirectory);
+			Content content = new Content(mContext, mTutorialManager.getBasicContent(i - 1));	
+			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_BASIC_FIRST + length);
 			addView(thirdDirectory, l);
 			addView(content, l);
 			addView(animation, p);
 		}
 		
-
-//		mThirdDirectoryExtra = new ThirdDirectory(mContext);
-//		mContentExtra = new Content(mContext);
+		mGestureDirectory = new SecondDirectory(mContext, mTutorialManager.getLastSecondDirectory());
+		addView(mGestureDirectory, l);
 		
-//		if (mModel == MODEL_ONE_SCREEN) {
-//			
-//		} else if (mModel == MODEL_TWO_SCREEN) {
-//			addView(mThirdDirectoryExtra, l);
-//			addView(mContentExtra, l);
-//		}
-	}
-	
-	private int judgeModel() {
-//		if () return  MODEL_ONE_SCREEN;
-//		} else if () 
-			return  MODEL_ONE_SCREEN;
+		for (int j = 1; j < mTutorialManager.getGestureIndex(); length++, j++) {
+			ThirdDirectory thirdDirectory = new ThirdDirectory(mContext, mTutorialManager.getGestureTD(j));
+			mGestureThirdDirectorys.add(thirdDirectory);
+			Content content = new Content(mContext, mTutorialManager.getGestureContent(j - 1));	
+			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_BASIC_FIRST + length);
+			addView(thirdDirectory, l);
+			addView(content, l);
+			addView(animation, p);
+		}
+
 	}
 	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		int model = judgeModel();
-		if(mModel != model && mModel == MODEL_ONE_SCREEN && model == this.MODEL_TWO_SCREEN) {
-			// add extra text view, task: judge text index
-			
-			addView(mThirdDirectoryExtra);
-			addView(mContentExtra);
-		} else if (mModel != model && mModel == MODEL_TWO_SCREEN && model == this.MODEL_ONE_SCREEN) {
-			// remove extra text view
-			removeView(mThirdDirectoryExtra);
-			removeView(mContentExtra);
-		}
-		// update size: text and animation
+		
 	}
 	
 	static final int SCROLL_DISTANCE = 100;
@@ -187,88 +173,24 @@ public class ContentLayout extends LinearLayout {
 		//hide index, called activity do the thing
 		mScrollEvent.onScrollLeft();
 	}
-	
-	private void doScrollDown() {
-		if (mTutorialManager.isFirstSecondDirectory(mSecondDirectory.getText().toString()) && 
-				mTutorialManager.isFirstThirdDirectory(mThirdDirectory.getText().toString()))
-			return ;
-		// up 
-		if (mTutorialManager.isLastSecondDirectory(mSecondDirectory.getText().toString()) && 
-				mTutorialManager.isFirstThirdDirectory(mThirdDirectory.getText().toString())) {
-			mSecondDirectory.setText(mTutorialManager.getFirstSecondDirectory());
-			mThirdDirectory.setText(mTutorialManager.getLastThirdDirectory(mSecondDirectory.getText().toString()));
-			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
-			if (mModel == MODEL_TWO_SCREEN) {
-				mThirdDirectoryExtra.setText("");
-				mContentExtra.setText("");
-			}
-			return ;
-		}
-		// normal 
-		if (mModel == MODEL_TWO_SCREEN) {
-			mThirdDirectoryExtra.setText(mThirdDirectory.getText().toString());
-			mContentExtra.setText(mContent.getText().toString());
-		}
-		mThirdDirectory.setText(mTutorialManager.getPreviousThirdDirectory(mThirdDirectory.getText().toString()));
-		mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
-//		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
-	}
-	
-	private void doScrollUp() {
-		if (mTutorialManager.isLastSecondDirectory(mSecondDirectory.getText().toString()) && 
-				mTutorialManager.isLastThirdDirectory(mThirdDirectory.getText().toString())) 
-			return ;
-		// down 
-		if (mTutorialManager.isFirstSecondDirectory(mSecondDirectory.getText().toString()) && 
-				mTutorialManager.isLastThirdDirectory(mThirdDirectory.getText().toString())) {
-			mSecondDirectory.setText(mTutorialManager.getLastSecondDirectory());
-			mThirdDirectory.setText(mTutorialManager.getFirstThirdDirectory(mSecondDirectory.getText().toString()));
-			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
-			if (mModel == MODEL_TWO_SCREEN) {
-				mThirdDirectoryExtra.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
-				mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
-			}
-			return ;
-		}
-		// normal
-		if (mModel == MODEL_TWO_SCREEN) {
-			mThirdDirectory.setText(mThirdDirectoryExtra.getText().toString());
-			mContent.setText(mContentExtra.getText().toString());
-			mThirdDirectoryExtra.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
-			mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
-		} else {
-			mThirdDirectory.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
-			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
-		}
-//		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
-	}
-	
+
 	// called by ContentFragment
-	public void onDirectoryClick(TextView view) {
-		if (view.getText().equals(mThirdDirectory.getText())) return;
-		
-		String secondDirectory = mTutorialManager.findScecondDirectory(view.getText().toString());
-		if (!mSecondDirectory.getText().equals(secondDirectory)) // if neccessary
-			mSecondDirectory.setText(secondDirectory);
-		mThirdDirectory.setText(view.getText());
-		mContent.setText(mTutorialManager.getContentByThirdDirectory(view.getText().toString()));
-		
-		// if necessary, change extra text
-		if (mModel == MODEL_TWO_SCREEN) {
-			if (mTutorialManager.isLastSecondDirectory(view.getText().toString()) && 
-					mTutorialManager.isLastThirdDirectory(view.getText().toString())) {
-				mThirdDirectoryExtra.setText("");
-				mContentExtra.setText("");
-			} else if (mTutorialManager.isFirstSecondDirectory(view.getText().toString()) &&
-					mTutorialManager.isLastThirdDirectory(view.getText().toString())) {
-				mThirdDirectoryExtra.setText("");
-				mContentExtra.setText("");
-			} else {
-				mThirdDirectoryExtra.setText(mTutorialManager.getNextThirdDirectory(view.getText().toString()));
-				mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
+	public int getThirdTextViewTop(TextView view) {
+		int top = 0;
+		for(TextView next: mBasicThirdDirectorys) {
+			if (view.getText().equals(next.getText())) {
+				top = next.getTop();
+				break;
 			}
 		}
-//		mAnimation.startAnimation();
+		
+		for(TextView next: mGestureThirdDirectorys) {
+			if (view.getText().equals(next.getText())) {
+				top = next.getTop();
+				break;
+			}
+		}
+		return top;
 	}
 	
 	private class FirstDirectory extends TextView {
@@ -299,8 +221,18 @@ public class ContentLayout extends LinearLayout {
 		
 		public SecondDirectory(Context context) {
 			super(context);
-			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 			setText(mResources.getString(R.string.second_directory_text_default));
+			init();
+		}
+		
+		public SecondDirectory(Context context, String text) {
+			super(context);
+			setText(text);
+			init();
+		}
+		
+		private void init() {
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 			setTextColor(mResources.getColor(R.color.second_directory_text));
 			setTextSize(TEXT_SIZE_DEFAULT);
 		}
@@ -317,8 +249,18 @@ public class ContentLayout extends LinearLayout {
 		
 		public ThirdDirectory(Context context) {
 			super(context);
-			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 			setText(mResources.getString(R.string.third_directory_text_default));
+			init();
+		}
+		
+		public ThirdDirectory(Context context, String text) {
+			super(context);
+			setText(text);
+			init();
+		}
+		
+		private void init() {
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 			setTextColor(mResources.getColor(R.color.third_directory_text));
 			setTextSize(TEXT_SIZE_DEFAULT);
 		}
@@ -335,8 +277,18 @@ public class ContentLayout extends LinearLayout {
 		
 		public Content(Context context) {
 			super(context);
-			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 			setText(mResources.getString(R.string.content_text_default));
+			init();
+		}
+		
+		public Content(Context context, String text) {
+			super(context);
+			setText(text);
+			init();
+		}
+		
+		private void init() {
+			setPadding(PADDING_LEFT_DEFAULT, PADDING_TOP_DEFAULT, PADDING_RIGHT_DEFAULT, PADDING_BOTTOM_DEFAULT);
 			setTextColor(mResources.getColor(R.color.content_text));
 			setTextSize(TEXT_SIZE_DEFAULT);
 			setSingleLine(false);

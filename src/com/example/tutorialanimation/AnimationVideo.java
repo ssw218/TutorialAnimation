@@ -1,10 +1,15 @@
 package com.example.tutorialanimation;
 
+import java.io.IOException;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.VideoView;
 
 public class AnimationVideo extends VideoView {
@@ -34,21 +39,25 @@ public class AnimationVideo extends VideoView {
 	private int mAnimation;
 	private String mUrl;
 	
+	private OnTouchListener mPlay = new OnTouchListener() {
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			start();
+			return false;
+		}
+	};
+	
 	public AnimationVideo(Context context, int id) {
 		super(context);
 		mContext = context;
 		mAnimation = id;
 		mUrl = URL + mContext.getPackageName() + "/" + getResourceId(mAnimation);
 		if (DEBUG) Log.v(TAG, "package name: " + mContext.getPackageName());
-		Uri uri = Uri.parse(mUrl);
+		final Uri uri = Uri.parse(mUrl);
 		setVideoURI(uri);
-		start();
-        setOnCompletionListener(new OnCompletionListener() {
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				start();
-			}
-        });
+		setZOrderOnTop(true);
+		setBackground(mContext.getResources().getDrawable(R.drawable.play));
+        setOnTouchListener(mPlay);
 	}
 	
 	private int getResourceId(int animation) {
@@ -58,6 +67,7 @@ public class AnimationVideo extends VideoView {
 			case ANIMATION_BASIC_SECOND :	id = R.raw.second; break;
 			case ANIMATION_BASIC_THIRD :	id = R.raw.third; break;
 			case ANIMATION_BASIC_FOURTH : 	id = R.raw.fourth; break;
+			default : id = R.raw.first; break;
 		}
 		return id;
 	}

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item type="id" name="firstDirectory" />
-    <item type="id" name="secondDirectory" />
-    <item type="id" name="thirdDirectory" />
-    <item type="id" name="content" />
-    <item type="id" name="animation" />
-</resources>
