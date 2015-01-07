@@ -167,6 +167,11 @@ public class TutorialManager {
 		}
 	}
 	
+	public static int dipToPx(Context context, float dip) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dip * scale + 0.5f);
+	}
+	
 	public boolean getPortrait() {
 		return mPortrait;
 	}

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /*
@@ -40,7 +41,7 @@ public class ContentLayout extends LinearLayout {
 	private TextView mThirdDirectory;
 	private TextView mContent;
 	// maybe a operation animation else
-	private InkGestureAnimation mAnimation;
+	private AnimationVideo mAnimation;
 	// if two screen model
 	private TextView mThirdDirectoryExtra;
 	private TextView mContentExtra;
@@ -71,33 +72,38 @@ public class ContentLayout extends LinearLayout {
 	}
 	
 	private void initChildren() {
-		mFirstDirectory = new FirstDirectory(mContext);
-		mSecondDirectory = new SecondDirectory(mContext);
-		mThirdDirectory = new ThirdDirectory(mContext);
-		mContent = new Content(mContext);
-		mCurrentIndex = InkGestureAnimation.ANIMATION_BASIC_FIRST_ID;
-		mAnimation = new InkGestureAnimation(mContext, mCurrentIndex);
+//		mCurrentIndex = InkGestureAnimation.ANIMATION_BASIC_FIRST_ID;
 		
 		LayoutParams l = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		addView(mFirstDirectory, l);
-		addView(mSecondDirectory, l);
-		addView(mThirdDirectory, l);
-		addView(mContent, l);
-		
-		LayoutParams p = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LayoutParams p = new LayoutParams(TutorialManager.dipToPx(mContext, 352), TutorialManager.dipToPx(mContext, 288));
+		//p.topMargin = mResources.getInteger(R.integer.animation_top_margin);
 		p.gravity = Gravity.CENTER;
-		p.topMargin = mResources.getInteger(R.integer.animation_top_margin);
-		addView(mAnimation, p);
-
-		mThirdDirectoryExtra = new ThirdDirectory(mContext);
-		mContentExtra = new Content(mContext);
 		
-		if (mModel == MODEL_ONE_SCREEN) {
-			
-		} else if (mModel == MODEL_TWO_SCREEN) {
-			addView(mThirdDirectoryExtra, l);
-			addView(mContentExtra, l);
+		FirstDirectory firstDirectory = new FirstDirectory(mContext);
+		addView(firstDirectory, l);
+		SecondDirectory secondDirectory = new SecondDirectory(mContext);
+		addView(secondDirectory, l);
+		
+		for (int i = 0; i < 4; i++) {
+		
+			ThirdDirectory thirdDirectory = new ThirdDirectory(mContext);
+			Content content = new Content(mContext);	
+			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_BASIC_FIRST + i);
+			addView(thirdDirectory, l);
+			addView(content, l);
+			addView(animation, p);
 		}
+		
+
+//		mThirdDirectoryExtra = new ThirdDirectory(mContext);
+//		mContentExtra = new Content(mContext);
+		
+//		if (mModel == MODEL_ONE_SCREEN) {
+//			
+//		} else if (mModel == MODEL_TWO_SCREEN) {
+//			addView(mThirdDirectoryExtra, l);
+//			addView(mContentExtra, l);
+//		}
 	}
 	
 	private int judgeModel() {
@@ -143,10 +149,10 @@ public class ContentLayout extends LinearLayout {
 			if (Math.abs(actionDownX - actionUpX) < SCROLL_DISTANCE) {
 				if (actionUpY - actionDownY > SCROLL_DISTANCE) {
 					if(DEBUG) Log.e(TAG, "gesture down");
-					doScrollDown();
+					//doScrollDown();
 				} else if (actionDownY - actionUpY > SCROLL_DISTANCE) {
 					if(DEBUG) Log.e(TAG, "gesture up");
-					doScrollUp();
+					//doScrollUp();
 				}
 			} else if (Math.abs(actionDownY - actionUpY) < SCROLL_DISTANCE) {
 				if (actionUpX - actionDownX > SCROLL_DISTANCE) { // add scroll left and scroll right
@@ -205,7 +211,7 @@ public class ContentLayout extends LinearLayout {
 		}
 		mThirdDirectory.setText(mTutorialManager.getPreviousThirdDirectory(mThirdDirectory.getText().toString()));
 		mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectory.getText().toString()));
-		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
+//		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
 	}
 	
 	private void doScrollUp() {
@@ -234,7 +240,7 @@ public class ContentLayout extends LinearLayout {
 			mThirdDirectory.setText(mTutorialManager.getNextThirdDirectory(mThirdDirectory.getText().toString()));
 			mContent.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
 		}
-		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
+//		mAnimation.setAnimationName(mThirdDirectory.getText().toString());
 	}
 	
 	// called by ContentFragment
@@ -262,7 +268,7 @@ public class ContentLayout extends LinearLayout {
 				mContentExtra.setText(mTutorialManager.getContentByThirdDirectory(mThirdDirectoryExtra.getText().toString()));
 			}
 		}
-		mAnimation.startAnimation();
+//		mAnimation.startAnimation();
 	}
 	
 	private class FirstDirectory extends TextView {

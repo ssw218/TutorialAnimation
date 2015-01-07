@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ContentFragment extends Fragment {
@@ -15,6 +16,7 @@ public class ContentFragment extends Fragment {
 	private static final boolean DEBUG = true;
 	
 	private ContentLayout mContentLayout;
+	private ScrollView mScrollView;
 	
 	public ContentFragment() {
 		super();
@@ -33,7 +35,10 @@ public class ContentFragment extends Fragment {
 		//mContentLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.content, null);
 		//return mContentLayout;
 		mContentLayout = new ContentLayout(getActivity());
-		return mContentLayout;
+		mScrollView = new ScrollView(getActivity());
+		mScrollView.setVerticalScrollBarEnabled(true);
+		mScrollView.addView(mContentLayout);
+		return mScrollView;
 	}
 	
 	public void thirdClick(TextView view) {
