@@ -17,21 +17,15 @@ public class AnimationVideo extends VideoView {
 	private static final boolean DEBUG = true;
 	
 	public static final int ANIMATION_NORMAL = 0;
-	public static final int ANIMATION_DELETE_INK = 1;
-	public static final int ANIMATION_ERASE_ALL_INK = 2;
-	public static final int ANIMATION_RETURN_INK = 3;
-	public static final int ANIMATION_TAB_INK = 4;
-	public static final int ANIMATION_DELETE_TYPESET = 5;
-	public static final int ANIMATION_INSERT_SPACE_TYPESET = 6;
-	public static final int ANIMATION_ERASE_ALL_TYPESET = 7;
-	public static final int ANIMATION_RETURN_TYPESER = 8;
-	public static final int ANIMATION_TAB_TYPESET = 9;
-	public static final int ANIMATION_SELECT_TEXT_TYPESET = 10;
-	public static final int ANIMATION_INSERT_TEXT_TYPESET = 11;
-	public static final int ANIMATION_BASIC_FIRST = 12;
-	public static final int ANIMATION_BASIC_SECOND = 13;
-	public static final int ANIMATION_BASIC_THIRD = 14;
-	public static final int ANIMATION_BASIC_FOURTH = 15;
+	public static final int ANIMATION_BASIC_FIRST = 1;
+	public static final int ANIMATION_BASIC_SECOND = 2;
+	public static final int ANIMATION_BASIC_THIRD = 3;
+	public static final int ANIMATION_BASIC_FOURTH = 4;
+	public static final int ANIMATION_DELETE = 5;
+	public static final int ANIMATION_INSERT_SPACE = 6;
+	public static final int ANIMATION_SELECT_TEXT = 7;
+	public static final int ANIMATION_RETURN = 8;
+	public static final int ANIMATION_BACKSPACE = 9;
 	public static final int DEFINED_VALUE = -1;
 	
 	private static final String URL = "android.resource://";
