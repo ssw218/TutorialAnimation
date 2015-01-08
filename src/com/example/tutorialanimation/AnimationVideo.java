@@ -62,7 +62,8 @@ public class AnimationVideo extends VideoView {
 			case ANIMATION_BASIC_SECOND :	id = R.raw.second; break;
 			case ANIMATION_BASIC_THIRD :	id = R.raw.third; break;
 			case ANIMATION_BASIC_FOURTH : 	id = R.raw.fourth; break;
-			case ANIMATION_DELETE :			id = R.raw.delete; break; 
+			case ANIMATION_DELETE :			id = R.raw.delete; break;
+			case ANIMATION_INSERT_SPACE :	id = R.raw.insert_space; break;
 			default : id = R.raw.first; break;
 		}
 		return id;

@@ -32,12 +32,16 @@
     </string-array>
     
     <string-array name="ink_gesture_content">
-        <item >Deletion is the act of deleting or removal by striking out material, such as a
-             word or passage, that has been removed from a body of written or printed matter.</item>
-        <item >Insert space</item>
-        <item >Select text</item>
-        <item >Return</item>
-        <item >Backspace</item>
+        <item >To invoke, the user must draw the desired ink gesture with either active pen or passive pen/finger, 
+            and hold at the end of the gesture. strikethrough text to delete.</item>
+        <item >To invoke, the user must draw the desired ink gesture with either active pen or passive pen/finger, 
+            and hold at the end of the gesture. strikethrough text to replace with single space.</item>
+        <item >To invoke, the user must draw the desired ink gesture with either active pen or passive pen/finger, 
+            and hold at the end of the gesture. invokes Ink Bubble.</item>
+        <item >To invoke, the user must draw the desired ink gesture with either active pen or passive pen/finger, 
+            and hold at the end of the gesture.</item>
+        <item >To invoke, the user must draw the desired ink gesture with either active pen or passive pen/finger, 
+            and hold at the end of the gesture.</item>
     </string-array>
     <string name="first_directory_item_text">Tutorial</string>
     <string name="first_directory_text_default">Tutorial</string>
