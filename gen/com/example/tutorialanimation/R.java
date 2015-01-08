@@ -1821,10 +1821,11 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f030018;
     }
     public static final class raw {
-        public static final int first=0x7f050000;
-        public static final int fourth=0x7f050001;
-        public static final int second=0x7f050002;
-        public static final int third=0x7f050003;
+        public static final int delete=0x7f050000;
+        public static final int first=0x7f050001;
+        public static final int fourth=0x7f050002;
+        public static final int second=0x7f050003;
+        public static final int third=0x7f050004;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

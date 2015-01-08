@@ -97,11 +97,12 @@ public class ContentLayout extends LinearLayout {
 		mGestureDirectory = new SecondDirectory(mContext, mTutorialManager.getLastSecondDirectory());
 		addView(mGestureDirectory, l);
 		
+		length = 0;
 		for (int j = 1; j < mTutorialManager.getGestureIndex(); length++, j++) {
 			ThirdDirectory thirdDirectory = new ThirdDirectory(mContext, mTutorialManager.getGestureTD(j));
 			mGestureThirdDirectorys.add(thirdDirectory);
 			Content content = new Content(mContext, mTutorialManager.getGestureContent(j - 1));	
-			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_BASIC_FIRST + length);
+			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_DELETE + length);
 			addView(thirdDirectory, l);
 			addView(content, l);
 			addView(animation, p);

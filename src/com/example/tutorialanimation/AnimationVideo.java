@@ -50,8 +50,9 @@ public class AnimationVideo extends VideoView {
 		final Uri uri = Uri.parse(mUrl);
 		setVideoURI(uri);
 		setZOrderOnTop(true);
-		setBackground(mContext.getResources().getDrawable(R.drawable.play));
+		setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
         setOnTouchListener(mPlay);
+        seekTo(1);
 	}
 	
 	private int getResourceId(int animation) {
@@ -61,6 +62,7 @@ public class AnimationVideo extends VideoView {
 			case ANIMATION_BASIC_SECOND :	id = R.raw.second; break;
 			case ANIMATION_BASIC_THIRD :	id = R.raw.third; break;
 			case ANIMATION_BASIC_FOURTH : 	id = R.raw.fourth; break;
+			case ANIMATION_DELETE :			id = R.raw.delete; break; 
 			default : id = R.raw.first; break;
 		}
 		return id;
