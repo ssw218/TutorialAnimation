@@ -107,7 +107,10 @@ public class ContentLayout extends LinearLayout {
 			addView(content, l);
 			addView(animation, p);
 		}
-
+		
+		mFirstDirectory.setFocusable(true);
+		mFirstDirectory.setFocusableInTouchMode(true);
+		mFirstDirectory.requestFocus();
 	}
 	
 	@Override

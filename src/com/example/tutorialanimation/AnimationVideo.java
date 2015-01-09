@@ -36,7 +36,13 @@ public class AnimationVideo extends VideoView {
 	private OnTouchListener mPlay = new OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			start();
+			int width = getWidth();
+			int height = getHeight();
+			if (DEBUG) Log.e(TAG, "width: " + width + ", height: " + height);
+			if (DEBUG) Log.e(TAG, "event: " + event);
+			if (event.getX() < width / 2 + 100 && event.getX() > width / 2 - 100 &&
+					event.getY() < height / 2 + 100 && event.getY() > height / 2 - 100)
+				start();
 			return false;
 		}
 	};
@@ -64,6 +70,9 @@ public class AnimationVideo extends VideoView {
 			case ANIMATION_BASIC_FOURTH : 	id = R.raw.fourth; break;
 			case ANIMATION_DELETE :			id = R.raw.delete; break;
 			case ANIMATION_INSERT_SPACE :	id = R.raw.insert_space; break;
+			case ANIMATION_SELECT_TEXT : 	id = R.raw.select_text; break;
+			case ANIMATION_RETURN :			id = R.raw.returns; break;
+			case ANIMATION_BACKSPACE :		id = R.raw.backspace; break;
 			default : id = R.raw.first; break;
 		}
 		return id;

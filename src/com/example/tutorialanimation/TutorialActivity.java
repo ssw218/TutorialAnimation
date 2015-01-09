@@ -24,8 +24,6 @@ public class TutorialActivity extends Activity {
 	private static final boolean DEBUG = true;
 	
 	private RelativeLayout mTutorialLayout;
-	TextView textView;
-	
 	private FragmentManager mFragmentManager;
 	
 	private IndexFragment mIndexFragment;
@@ -100,7 +98,6 @@ public class TutorialActivity extends Activity {
 //    		textView.setText("Not Portrait");
 //    	}
         TutorialManager sizeManager = TutorialManager.getInstance(this);
-//        textView.setTextSize(sizeManager.getTextSize());
     }
     
 }

@@ -130,6 +130,7 @@ public class IndexLayout extends LinearLayout {
 			
 			// add title to layout
 			addView(mTitleView);
+			showList();
 		}
 		
 		private void showList() {
