@@ -41,6 +41,13 @@ public class ContentFragment extends Fragment {
 		return mScrollView;
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (DEBUG) Log.e(TAG, "onResume");
+		mContentLayout.onVideoResume();
+	}
+	
 	public void thirdClick(TextView view) {
 		mScrollView.scrollTo(0, mContentLayout.getThirdTextViewTop(view));
 	}

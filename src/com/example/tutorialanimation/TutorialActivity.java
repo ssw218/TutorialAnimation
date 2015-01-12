@@ -76,6 +76,11 @@ public class TutorialActivity extends Activity {
         mIndexFragment.setThirdClickListener(mOnThirdClickListener);
     }
     
+    public void onResume() {
+    	super.onResume();
+    	if (DEBUG) Log.e(TAG, "onResume");
+    }
+    
     public void onConfigurationChanged(Configuration newConfig) {
     	super.onConfigurationChanged(newConfig);
     	TutorialManager layoutManager = TutorialManager.getInstance(this);

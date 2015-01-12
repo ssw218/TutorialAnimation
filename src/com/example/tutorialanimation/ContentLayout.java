@@ -43,7 +43,8 @@ public class ContentLayout extends LinearLayout {
 	private SecondDirectory mGestureDirectory;
 	
 	private ArrayList<ThirdDirectory> mBasicThirdDirectorys;
-	private ArrayList<ThirdDirectory> mGestureThirdDirectorys; 
+	private ArrayList<ThirdDirectory> mGestureThirdDirectorys;
+	private ArrayList<AnimationVideo> mAnimations;
 	
 	public ContentLayout(Context context) {
 		super(context);
@@ -72,6 +73,7 @@ public class ContentLayout extends LinearLayout {
 	private void initChildren() {
 		mBasicThirdDirectorys = new ArrayList<ThirdDirectory>();
 		mGestureThirdDirectorys = new ArrayList<ThirdDirectory>();
+		mAnimations = new ArrayList<AnimationVideo>();
 		
 		LayoutParams l = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		LayoutParams p = new LayoutParams(TutorialManager.dipToPx(mContext, 352), TutorialManager.dipToPx(mContext, 288));
@@ -89,6 +91,7 @@ public class ContentLayout extends LinearLayout {
 			mBasicThirdDirectorys.add(thirdDirectory);
 			Content content = new Content(mContext, mTutorialManager.getBasicContent(i - 1));	
 			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_BASIC_FIRST + length);
+			mAnimations.add(animation);
 			addView(thirdDirectory, l);
 			addView(content, l);
 			addView(animation, p);
@@ -103,6 +106,7 @@ public class ContentLayout extends LinearLayout {
 			mGestureThirdDirectorys.add(thirdDirectory);
 			Content content = new Content(mContext, mTutorialManager.getGestureContent(j - 1));	
 			AnimationVideo animation = new AnimationVideo(mContext, AnimationVideo.ANIMATION_DELETE + length);
+			mAnimations.add(animation);
 			addView(thirdDirectory, l);
 			addView(content, l);
 			addView(animation, p);
@@ -111,6 +115,14 @@ public class ContentLayout extends LinearLayout {
 		mFirstDirectory.setFocusable(true);
 		mFirstDirectory.setFocusableInTouchMode(true);
 		mFirstDirectory.requestFocus();
+	}
+	
+	public void onVideoResume() {
+		if (mAnimations == null) return ;
+		if (mAnimations.size() == 0) return ;
+		for(AnimationVideo next : mAnimations) {
+			next.seekTo(1);
+		}
 	}
 	
 	@Override
