@@ -130,7 +130,7 @@ public class IndexLayout extends LinearLayout {
 			
 			// add title to layout
 			addView(mTitleView);
-			showList();
+			mTitleView.onShowList();
 		}
 		
 		private void showList() {
@@ -250,16 +250,19 @@ public class IndexLayout extends LinearLayout {
 						invalidate();
 					}
 					else { 
-						showList();
-						// showing animation
-						mItemState = ITEM_STATE_SHOWING;
-						angle = ANGLE_START_LINE;
-						invalidate();
+						onShowList();
 					}
 				}
 				
 			};
 			
+			public void onShowList() {
+				showList();
+				// showing animation
+				mItemState = ITEM_STATE_SHOWING;
+				angle = ANGLE_START_LINE;
+				invalidate();
+			}
 			
 			int angle;
 			static final int ANGLE_END_LINE = 90;
