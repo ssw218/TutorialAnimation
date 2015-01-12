@@ -6,13 +6,13 @@
     <color name="third_directory_text">#FF000000</color>
     <color name="content_text">#FF000000</color>
     
-    <color name="indext_layout_background">#FFD0F8CE</color>
-    <color name="first_directory_item_text">#FF666666</color>
-    <color name="first_directory_item_background">#FF22B14C</color>
+    <color name="indext_layout_background">#FF3F3F3F</color>
+    <color name="first_directory_item_text">#FFFFFFFF</color>
+    <color name="first_directory_item_background">#FF303030</color>
     <color name="second_directory_item_text">#FFFFFFFF</color>
-    <color name="second_directory_item_background_normal">#FF259B24</color>
+    <color name="second_directory_item_background_normal">#FF202020</color>
     <color name="second_directory_paint">#FFFFFFFF</color>
-    <color name="third_directory_item_text">#FF666666</color>
-    <color name="third_directory_item_background_normal">#FFD0F8CE</color>
-    <color name="third_directory_item_background_focus">#FF259B24</color>
+    <color name="third_directory_item_text">#FFBCBCBC</color>
+    <color name="third_directory_item_background_normal">#FF3F3F3F</color>
+    <color name="third_directory_item_background_focus">#FF202020</color>
 </resources>
